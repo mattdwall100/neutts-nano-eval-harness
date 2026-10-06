@@ -1,114 +1,139 @@
 # Design decisions
 
-Headlines only. Every number comes from a table in `results/`; every step has a figure. Commands are in the README.
+This is the story of the work, in the order it happened, with the reasoning I used at each step and the figure that settled it. Every number here comes from a table in `results/`, and the README has the commands.
 
-## Headline
+## Where it ended up
 
 ![headline](results/headline.png)
 
 | # | Step added | RTF | Note |
 |---|---|---|---|
-| 1 | As shipped: torch bf16 + torch codec, 13 s reference, watermark | 10.6 | 2 utterances; earlier runs 17 |
+| 1 | As shipped: torch bf16 + torch codec, 13 s reference, watermark | 10.6 | 2 utterances; earlier runs of the same setup measured 17 |
 | 2 | Q4 backbone + ONNX int8 codec | 2.27 | RAM 3.3 GB -> 1.3 GB |
 | 3 | 5 s reference | 1.12 | prefill 1.39 -> 0.32 |
-| 4 | watermark off | 1.11 | matters only in streaming |
+| 4 | watermark off | 1.11 | only matters in streaming |
 | 5 | llama.cpp built for this CPU | 1.08 | +3 % |
-| 6 | output rows sliced (our patch) | **0.87** | +20 %, audio byte-identical |
+| 6 | output rows sliced (my llama.cpp patch) | **0.87** | +20 %, audio byte-identical |
 | 7 | decode threads pinned to P-cores | 0.87 | within noise |
-| 8 | streaming, shipped settings | 2.56 | stalls up to 4.5 s |
-| 9 | streaming, codec spin off, 50-frame chunks | **0.95** | no stalls, first audio 1.4 s |
+| 8 | streaming with the shipped streaming settings | 2.56 | playback stalls for up to 4.5 s |
+| 9 | streaming, codec spinning off, 50-frame chunks | **0.95** | no stalls, first audio after 1.4 s |
 
-- 12x end to end on the same weights; WER 2-6 % and speaker similarity 0.47-0.50 flat from row 2 on (`results/h1_table.md`).
-- Three changes do almost all of it: quantised backbone + ONNX codec, shorter reference, output-row slice.
-- One interleaved session, tuning voice. Unseen voices: batch 0.73, streaming 0.96, stall-free (test set below).
+RTF is seconds of compute per second of audio, so below 1.0 is real time. Rows 1 to 7 are batch mode; 8 and 9 are streaming. Everything is the same model weights. Word error rate and speaker similarity stay flat from row 2 onwards, and for the slice in row 6 the output audio is byte for byte identical. The chain is one voice in one interleaved session; on five voices I never tuned on, the final configuration measures 0.73 in batch and 0.96 streaming, without a stall.
 
-## Hardware and scope
+Three changes do almost all of it: the quantised backbone with the ONNX codec, the shorter reference clip, and the output-row slice. The rest of this document is how I found that out, including the things that didn't work.
 
-Intel i7-1265U (2 P-cores + 8 E-cores, 12 threads, 15 W), 32 GB, no CUDA, Windows 11, "best performance" power mode on mains.
+## What I was measuring, and what I decided "performance" meant
 
-- The system under test is backbone + codec + phonemizer + watermark: the codec is a `NeuTTS` constructor argument and users hear waveforms, not tokens. Neuphonic's published numbers exclude it; ours report both.
-- No weight changes anywhere. Retraining ideas (lower token rate, distilled decoder) are future work.
-- Tuning used one voice (jo) and corpus lines 1-10; five other voices and the remaining lines were held out and run once at the end.
+The machine is an Intel i7-1265U laptop chip: two performance cores and eight efficiency cores, twelve threads, a 15 W power budget, 32 GB of RAM, no CUDA. Everything runs on the CPU, which is on-brief, since on-device is the point.
 
-## Metrics
+The first decision was what the system under test is. NeuTTS-Nano is four pieces: a phonemizer that turns text into phonemes, a Llama-style backbone that turns phonemes plus a reference voice into audio tokens, the NeuCodec decoder that turns those tokens into a 24 kHz waveform, and a Perth watermark applied to the result. Neuphonic's published numbers cover only the backbone's tokens per second. I decided the codec is in scope, because it is a constructor argument of their own `NeuTTS` class and because nobody hears tokens. So the harness reports both: backbone tokens per second, comparable to their table, and end-to-end real-time factor, which is what a user feels.
+
+The second decision was a hard line: no weight changes. Quantisation choice, runtimes, threads, prompts and streaming settings are all fair game; training or fine-tuning anything is not. Two ideas that would have needed retraining, a lower token rate than 50 Hz and a cheaper distilled decoder, were parked as future work.
+
+The metrics, then:
 
 | Metric | Why |
 |---|---|
-| RTF, total and per stage (phonemize, prompt, prefill, generate, codec, watermark, glue) | where the time goes; glue ≈ 0 or a stage boundary is missing |
-| decode tok/s, prefill tok/s | comparable with Neuphonic's table; prefill is a fixed per-utterance cost |
-| peak RSS | memory ceiling |
-| TTFA, worst stall | streaming: first sound, and whether playback ever runs dry |
-| WER (Whisper small.en, compound-tolerant) | words intact |
-| speaker similarity (ECAPA cosine vs the reference) | voice intact |
-| seam distance (log-mel dB vs the batch waveform of the same seed) | chunking artefacts; sample-level SNR was wrong (phase, not audibility) |
-| n_failed | utterances with no speech tokens |
+| RTF, total and per stage: phonemize, prompt build, prefill, generate, codec decode, watermark, and "glue" | so I could see where the time goes. Glue is end-to-end minus the sum of the stages; if it grows, I've missed a stage boundary |
+| decode tokens/s and prefill tokens/s | comparable with Neuphonic's table; prefill is a fixed cost per utterance that their table hides |
+| peak memory | the on-device ceiling |
+| time to first audio, and worst stall | for streaming: when the first sound arrives, and whether playback would ever run dry |
+| word error rate, by transcribing the output with Whisper | are the words intact? |
+| speaker similarity, cosine between ECAPA embeddings of the output and the reference clip | is the voice intact? |
+| seam distance, the log-mel spectral difference between a streamed waveform and the batch waveform of the same seed | are the chunk joins audible? |
 
-## Measurement validity
+The quality metrics exist as a floor. Every speed trick I tried could have bought its speed by dropping words or drifting the voice, and I wanted the harness to catch that without me listening to hundreds of files.
 
-| Decision | Reason |
-|---|---|
-| Preflight refuses to start above 20 % other-process CPU | the first sweep ran at 28-46 % and tokens/s fell 4x mid-run |
-| Record and flag per-row interference; never gate, rescale or retry | tried a gate: the signal was a constant kernel/Defender offset, zero information, 4x run time |
-| Paired seeds, interleaved rounds, fresh process per config | identical configs drift up to 25 % between sessions; compare only within a sweep |
-| Microbench for levers, full harness to confirm | harness decode variance ±40 % run to run; microbench ±5 % |
-| Power mode, AC state, preflight load recorded per run | "balanced" caps clocks |
+## Building the harness, and learning what a trustworthy number costs
 
-## 1. Shipped options
+I wrapped Neuphonic's `NeuTTS` class rather than reimplementing it, so the numbers are for the code they ship. The stage timers are monkeypatched onto its methods, and because the torch and GGUF paths nest those methods differently, the timer subtracts nested intervals so nothing is counted twice. Every configuration uses the identical set of seeds, so when two configurations differ it's the configuration, not the dice. The corpus is seventy Harvard sentences, public domain and phonetically balanced, with no digits so WER needs no number handling.
+
+The first real sweep taught me the most important lesson of the project. I ran it while Spotify, Chrome and Docker were open, and tokens per second on the same sentence fell from 1.7 to 0.4 over ten utterances. My first reaction was to measure the background load and rescale. That's wrong on a 15 W chip: another process doesn't just take a share of the CPU, it steals clock through the shared power budget, pollutes the cache and competes for memory bandwidth, and it can land on exactly the core you pinned to. There is no linear correction.
+
+My second reaction was a gate: measure other-process CPU during each utterance, and discard and re-run anything above a threshold. That was also wrong, and it took a run to see why. On an idle machine every row still read 15 to 20 percent, 142 discards in twenty minutes, and the figure explained none of the variance in tokens per second. The "other" load was a constant accounting offset: kernel time paging the memory-mapped model, Defender scanning every WAV I wrote. A gate on a metric with no signal just burns time.
+
+What I settled on is control and provenance rather than correction: a preflight that refuses to start if other processes are above 20 percent, naming them; per-row recording of that load with a "suspect" flag, never discarded; high process priority; a warm-up; and, for anything that matters, interleaved rounds, so that if the machine slows during a run every configuration slows together and the comparison stays paired. I also learned that identical configurations drift by up to 25 percent between sessions on this laptop, so the only comparisons I trust are rows measured in the same run. That is why the headline chain was re-measured in one session rather than stitched from the sweeps that discovered each step.
+
+## Step 1: the shipped options
 
 ![b1](results/b1_stages.png)
 
-- Nothing is real time as shipped. bf16 is pathological on a CPU without bf16 instructions: prefill 40 tok/s vs 314 in fp32, same weights.
-- Backbone is 85-90 % of the cost, prefill the larger half. ONNX int8 codec: 0.27 -> 0.10 RTF, 2.8 GB -> 1.0 GB. Watermark < 0.03 RTF. Distilled codec changes nothing: its decoder is the same 185.6M-parameter network, only the encoder was distilled.
-- WER scorer must accept compound spellings ("drugstore" / "drug store"): 10 % -> 2 %. Details: `results/b1_table.md`.
+Nothing is real time as shipped. The default torch path loads the backbone in bfloat16, and this CPU has no bfloat16 instructions, so the matrix multiplies fall to an emulation path: prefill ran at 40 tokens per second against 314 for the same weights in float32. The Q4 GGUF backbone through llama.cpp was the only sensible starting point, and the ONNX int8 codec decoder was the one clean win on the codec side, 0.27 down to 0.10 RTF and 2.8 GB down to 1.0 GB of memory with no measurable quality change.
 
-## 2. Threads and reference length
+Two smaller things fell out. The watermark costs under 0.03 RTF in batch, so it isn't a batch-mode lever at all. And the distilled codec Neuphonic ships changes nothing for decoding, which puzzled me until I counted parameters: its decoder is the identical 185.6M-parameter network as the full codec, and only the encoder, which is used once per reference clip, was distilled. That closed the codec axis, and it also killed my idea of exporting the distilled decoder to ONNX: it would have reproduced the existing file.
+
+The scorer needed a fix here too. Whisper writes "drugstore" where the corpus has "drug store", which a word-level alignment counts as two errors. Making the alignment accept a word matching two adjacent words on the other side took the GGUF configurations from a reported 10 percent WER to 2 percent, and the remaining errors were real misreadings.
+
+## Step 2: where the backbone's time goes, and the reference clip
+
+To tune the backbone I had to split its time into two phases, because they behave like different workloads. Prefill is reading the prompt: all of its tokens pushed through the transformer in one pass to build the attention cache. Decode is generating: one new token per pass, each one a full trip through the 24 layers plus the output projection, reusing the cache for everything before it. Per token, prefill is about eight times cheaper, because it pushes hundreds of tokens through each weight matrix at once and only needs output scores for the last one; decode has to go one token at a time.
+
+That split exposed something the shipped code hides. The prompt is 940 tokens, and 653 of them are the 13-second reference clip. Prefill of that prompt was a constant 2.5 to 3.5 seconds per utterance on Q4, half the total for a two-second sentence, and it's redone from scratch every call because the reference code resets the model between utterances for reproducibility. The reference clip is the lever.
 
 ![r1](results/r1_tradeoff.png)
 
-- Prefill scales with threads (350 tok/s at 12 vs 296 at 4); decode is best on 4 threads pinned to P-cores (65 vs 47 at 12). E-cores are half a P-core on decode, a third on prefill. End to end the gain is 0-5 %: within noise (`results/tune_threads.md`, `g1_table.md`).
-- Prompt is 940 tokens of which 653 are the 13 s reference: reference length is the lever. 6.4 s is free (similarity equal to the full clip); 5 s costs some voice identity; 3 s is real time but a different-sounding speaker (`results/r1_table.md`).
+So I cut Neuphonic's sample voice at word boundaries, with Whisper timings aligned to the official transcript so the shortened text is exactly what's spoken, and swept six lengths from 3 to 13 seconds in one interleaved session. RTF is linear in prompt length. At 6.4 seconds the voice similarity was as good as the full clip; at 5 seconds it slipped slightly with occasional outliers; at 3 seconds the words were intact but it was a different-sounding speaker. I chose 5 seconds for the headroom and said so, with the cost recorded.
 
-## 3. Why streaming was slower than batch
+Threads were the other backbone lever and they turned out to be a small one. A microbench showed prefill likes all twelve threads, since the efficiency cores help a compute-bound pass, while decode is best on four threads pinned to the two performance cores, because llama.cpp's pool waits for its slowest thread and an efficiency core is half a performance core on this work. Pinning gave 13 percent in isolation and 0 to 5 percent end to end across three confirmation runs, which I count as noise. It's in the final configuration as optional and not in the claims.
+
+## Step 3: why streaming was slower than batch, and the fix
+
+Streaming is the configuration that matters for a product, and as shipped it was 1.5 to 2.7 times slower than batch, stalling for seconds. Three things were going on, and it took two sweeps and a dead end to separate them.
+
+The first was the watermark, applied per chunk in streaming with a fixed cost of a few hundred milliseconds per call, up to 2.8 RTF on small chunks. It went off, with the note that shipping with it is Neuphonic's policy decision, and that the batch-mode cost of keeping it is under 0.03 RTF.
+
+The second was the vocoder re-decoding context. The codec decoder is bidirectional: the audio it produces for a frame depends on frames after it, so each chunk is decoded with lookback frames of already-decoded context and a few lookforward frames, and only the middle is kept. I measured whether this converges by decoding a real token sequence with increasing lookback and comparing to the whole-sequence decode: it never plateaus, 4.2 dB at zero lookback down to 2.5 dB at 100, because the decoder has global attention over its window. So chunking has an inherent cost and lookback is a dial, not a threshold. Larger chunks amortise it.
+
+The third was generation itself running twice as slowly in streaming as in batch, and my first hypothesis was wrong. I assumed the per-token Python overhead of the library's streaming completion path, so I wrote a token-level loop that drives the model with ids only, verified it produced identical tokens to the reference for every seed, and it gained nothing. It did find a small bug in the reference streaming code, the tail chunk placed one frame late, and it's kept in `experiments/` as the record of a wrong hypothesis.
+
+The real cause only showed up when I built a microbench that interrupted decoding with a codec call every 25 steps, the way streaming does. Steady decode ran at 95 steps per second; after each codec call it ran at 35, and the first step after the call took 120 to 330 milliseconds instead of 11. ONNX Runtime's worker threads keep spinning after a call finishes, in case more work arrives, and in that window they occupy the cores the backbone needs. One session option, telling those workers to sleep when idle, restored generation to 85 to 99 steps per second. Batch mode never showed this because it calls the codec once per sentence.
 
 ![s4](results/s4_streaming.png)
 
-- Shipped streaming was 1.5-2.7x slower than batch for three reasons: the watermark per chunk (0.25-2.8 RTF), context re-decode (the vocoder is bidirectional with global attention, so chunks re-decode lookback frames and never converge to the batch output: `results/vocoder_receptive_field.json`), and generation itself running 2x slower.
-- The generation slowdown was the **ONNX Runtime codec's worker threads spinning after each call** and starving the backbone: 35 steps/s after a codec call vs 95 steady. One session option (`allow_spinning=0`) restores it. Batch never showed it because it calls the codec once.
-- Not the per-token Python path: a token-level loop (`experiments/stream.py`, token-identical to the reference) gave no gain and was dropped. It did find a reference bug: the tail chunk is placed one frame late.
-- With spin off, chunk size trades codec cost against first audio; lookback trades seam quality against speed. Chosen: 50 / 50 (RTF 0.95, first audio 1.4 s, seams as shipped); low-latency 25 / 10 (first audio 0.9 s). Tables: `results/s1_table.md`, `s3_table.md`, `s4_table.md`.
+With that fixed, chunk size and lookback became a clean two-dial trade, and I swept them. Every setting streamed without stalling. Lookback 50 gives the best seams and voice match; shorter lookback buys speed and earlier first audio. I chose 50-frame chunks with lookback 50 as the default, because its seam quality equals the shipped setting and it has the most headroom, and 25-frame chunks with lookback 10 as a low-latency option, first sound after 0.9 seconds instead of 1.4.
 
-## 4. The output projection slice
+## Step 4: the output projection, and forking llama.cpp
 
-![slice](results/lm_head_slice.png)
+With prefill cut down, generation was the largest stage, so I looked at what one decode step actually computes. The transformer's last layer produces a 576-dimensional vector, and the final step multiplies it against one row per vocabulary entry to score every possible next token. NeuTTS-Nano kept the 194,246-entry vocabulary of the text model it was fine-tuned from, and with a hidden size of 576 that one matrix is about as much work as the 24 layers combined: 112 million multiply-adds against 117 million.
 
 | Fact | Number |
 |---|---|
-| vocabulary is text the model never emits | 194,246 rows: 65,536 speech + 262 special + 128,448 text |
-| the projection is half of each decode step (hidden 576, 24 layers) | layers 117M MACs, projection 112M; speech rows only 38M |
-| dropped rows carry nothing (17,498 steps, 100 utterances) | mass mean 3e-5, max 5e-3; 0 of 874,900 top-50 slots; best rank ever 335 |
-| rows are independent dot products; nothing downstream reads them | kept scores bit-identical |
-| a sampled text token would be silently dropped by the decode regex but stay in context | the slice removes that failure mode |
+| the vocabulary is mostly text the model never emits | 65,536 speech codes + 262 special tokens + 128,448 text tokens |
+| the projection is half of each decode step | layers 117M MACs, projection 112M; the speech rows alone would be 38M |
+| each row's score is an independent dot product; nothing downstream reads the rows we'd drop | kept scores are bit-identical |
 
-- Implemented as a 49-line llama.cpp patch (`llama_patch/llama_output_rows.patch`): a view of the row range on the quantised matrix, scattered into the full-size score buffer so samplers and bindings are untouched. Off by default; `LLAMA_OUTPUT_ROWS=start:count`.
-- Tried first from outside (hidden vector + NumPy matmul): slower, because llama.cpp still runs its projection and float32 is 4x the memory traffic of its 8-bit matrix.
-- Tests: kept-row scores identical, tokens identical for a seed on every voice tried, 40 of 40 WAVs byte-identical, decode +25-28 %, RTF -11-15 % (`experiments/slice_test.py`, `results/f1_table.md`).
-- Build grid: the slice is worth +18 %, compiling for this CPU +7 %, and they stack; OpenMP beats llama.cpp's own pool; forcing threads to spin halves decode (`results/grid.md`).
+The question was whether the text rows ever matter, and that is measurable: at every decode step, how much probability do they hold, and do any reach the top-50 candidate set the sampler draws from? Over 100 utterances and 17,498 decode steps the dropped rows held a mean of 0.00003 of the probability, never once appeared in the top 50, and the closest any came was rank 335. The rows that came closest were phoneme characters from the prompt, not English words.
 
-## 5. Held-out test set
+![slice](results/lm_head_slice.png)
+
+There's a second reason to want the slice. Today nothing forbids the model from emitting a text token; it just doesn't, as a learned habit. If it did, the reference code's regex would silently drop that frame, but the token would stay in the backbone's context and condition everything after it. Slicing makes that impossible by construction.
+
+The first implementation failed, and the failure taught me where the saving had to live. I pulled the hidden vector out of llama.cpp and did the sliced projection in NumPy: the scores matched to a correlation of 0.999998, but the step got slower, because llama.cpp still ran its full projection in that mode, and my float32 matrix was four times the memory traffic of its 8-bit one. The slice had to happen inside llama.cpp, in its own format.
+
+There was no compiler on the machine and no admin rights, so I unzipped a portable LLVM-MinGW toolchain, checked out llama.cpp at the exact revision the Python bindings vendor, and wrote a 49-line patch: a view of the row range on the quantised output matrix, with the scores scattered into the usual full-size buffer and minus infinity elsewhere, so the sampler, the bindings and the whole harness stay untouched. It's off by default and switched on by an environment variable, which means the same binary is its own baseline. The tests: kept-row scores identical, token sequences identical for a seed on every voice I tried, 40 of 40 output files byte-identical, decode 25 to 28 percent faster, end-to-end RTF 11 to 15 percent lower. Byte-identical audio means there is no quality question to answer.
+
+A build grid separated the two things that had changed together when I forked: compiling for this CPU is worth about 7 percent, the slice about 18, and they stack. It also showed that forcing llama.cpp's own threads to spin halves decode, the mirror image of the codec finding.
+
+## Step 5: the held-out test
 
 ![test](results/test_voices.png)
 
-- Five unseen voices x 20 unseen texts, batch and streaming, once, configuration frozen. Batch under real time on every voice (0.62-0.86); streaming 0.82-1.09 with **zero stalls in 99**, long passages included.
-- Quality is uneven, and the cause is the clip, not the speed work: the two voices cut mid-sentence have 3-7x the WER. Rerun with their whole clips: emily 19 -> 11 %, dave 10.5 -> 3.9 %. **Recommendation: a short clip that ends on a sentence boundary**, not "5 s".
-- One failure in 100: the model sampled its stop token first (voice steven, one seed). Reproduced on the unmodified wheel; the shipped code crashes on it in both modes; the harness records it.
+Everything above was tuned on one voice and ten sentences, which is a validation set by any other name. So the last measurement was a test set: five voices I had never used, twenty sentences I had never used including the long passages, batch and streaming, run once on the frozen configuration.
 
-## Final configuration
+Speed generalised. Batch was under real time on every voice, 0.62 to 0.86; streaming ran 0.82 to 1.09 by voice with zero stalls in 99 utterances, long passages included.
 
-Q4 backbone on patched llama.cpp (native build, rows sliced) · ONNX int8 codec, spinning off · short reference ending on a sentence boundary · watermark off (product decision) · streaming 50-frame chunks, lookback 50 · optional 4 decode threads pinned to P-cores.
+Quality did not generalise uniformly, and the test set did its job. Two voices had three to seven times the word error rate of the others, and they were exactly the two whose clips I had cut to five seconds mid-sentence to match the tuning voice. Rerunning them with their whole clips roughly halved the errors: 19 to 11 percent, 10.5 to 3.9. The failure mode is the model repeating or dropping a phrase when the reference ends mid-thought. So the recommendation is not "use a 5-second clip" but "use a short clip that ends on a sentence boundary". On the tuning voice the cut had happened to land on a comma, which hid this.
 
-## Limits and rejected ideas
+The test set also produced one failed utterance in a hundred: the model sampled its stop token first and produced nothing. I reproduced it on the unmodified library with the same seed, so it isn't mine, and I found that the shipped code crashes on it in both batch and streaming. The harness now records it as a failure and carries on, because a benchmark that crashes on the model's own failure can't report the failure rate.
 
-- Samples are small (6-20 texts x 2 seeds) to fit this laptop; the harness scales to the 70-text corpus and only final configurations got the larger run. Session drift means headline rows are only comparable within their run.
-- Slice verified on Q4, English, top-50 sampling; threads and the build are specific to this chip.
-- Rejected: playback-device codec (output is PCM); lower than 50 Hz tokens (retraining); training a decoder (GPU); core pinning in batch mode (stages are sequential); a gate on background load; a Python-side projection; llama.cpp batch sizes; KV-prefix reuse between utterances (real, ~26 % of prefill, but secondary and unmeasured).
-- `docs/PLAN.md` is the original plan, kept as written.
+## The final configuration, and what I'd tell the team
+
+Q4 backbone on llama.cpp built for this CPU with the output rows sliced; ONNX int8 codec with thread spinning off; a short reference clip that ends on a sentence boundary; watermark off as a product decision; streaming with 50-frame chunks and lookback 50, or 25 and 10 for low latency; four decode threads pinned to the performance cores as an optional extra.
+
+The two findings I'd put in front of Neuphonic are the ones that cost nothing and apply everywhere: the output-row slice, a few lines in their own llama.cpp build or export script with the evidence above, and the codec's spinning threads, a one-line session option that is the entire reason their streaming mode is slower than their batch mode.
+
+## Limits, and ideas I rejected
+
+The samples are small, six to twenty sentences with two seeds, because that is what twenty-minute sweeps on a laptop allow. The harness scales to the full corpus, and only final configurations got the larger run. Thread settings and the compiled library are specific to this chip; the harness, the slice and the streaming fixes are not. The slice is verified on Q4, English and top-50 sampling.
+
+Rejected along the way: optimising for the playback device, since the output is plain PCM and the OS resamples it for free; a lower token rate, which is baked into both models; training a cheaper decoder, which needs a GPU; core pinning in batch mode, where stages run one after another so the sum is what matters; the load gate; the Python-side projection; llama.cpp batch sizes; and reusing the cached prompt prefix between utterances, which is real, about a quarter of prefill, but secondary, and I left it unmeasured. `docs/PLAN.md` is the plan I wrote at the start, kept as written.
