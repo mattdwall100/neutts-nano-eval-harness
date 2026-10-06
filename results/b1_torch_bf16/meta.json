@@ -1,0 +1,22 @@
+{
+  "name": "b1_torch_bf16",
+  "backbone": "neuphonic/neutts-nano",
+  "codec": "neuphonic/neucodec",
+  "dtype": "bf16",
+  "watermark": true,
+  "threads": null,
+  "ref_audio": "samples/jo.wav",
+  "ref_text": "samples/jo.txt",
+  "corpus": "corpus.txt",
+  "limit": 2,
+  "max_other_cpu": 20.0,
+  "preflight_other_cpu_pct": 6.8,
+  "high_priority": true,
+  "load_s": 12.121,
+  "rss_after_load_mb": 3265.0,
+  "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+  "cores": 12,
+  "power_scheme": "best performance (ac=True)",
+  "python": "3.12.13",
+  "torch": "2.14.1+cpu"
+}

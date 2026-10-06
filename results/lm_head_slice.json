@@ -1,0 +1,633 @@
+{
+ "model": "neuphonic/neutts-nano-q4-gguf",
+ "reference": "samples/jo6",
+ "n_texts": 50,
+ "seeds": [
+  1000,
+  1001
+ ],
+ "n_utterances": 100,
+ "n_steps": 17498,
+ "top_k": 50,
+ "steps_with_a_dropped_row_inside_top": {
+  "50": 0,
+  "100": 0,
+  "200": 0,
+  "500": 1,
+  "1000": 10,
+  "5000": 1516
+ },
+ "most_frequent_best_dropped_rows": [
+  {
+   "token": "\u026a",
+   "id": 193824,
+   "steps": 999
+  },
+  {
+   "token": "\u00e6",
+   "id": 9371,
+   "steps": 507
+  },
+  {
+   "token": " h",
+   "id": 305,
+   "steps": 496
+  },
+  {
+   "token": " ",
+   "id": 220,
+   "steps": 461
+  },
+  {
+   "token": " k",
+   "id": 597,
+   "steps": 459
+  },
+  {
+   "token": " \u00e6",
+   "id": 66113,
+   "steps": 435
+  },
+  {
+   "token": " j",
+   "id": 503,
+   "steps": 415
+  },
+  {
+   "token": "\u02c8",
+   "id": 194046,
+   "steps": 408
+  },
+  {
+   "token": "\ufffd",
+   "id": 233,
+   "steps": 385
+  },
+  {
+   "token": "\u0283",
+   "id": 193849,
+   "steps": 374
+  },
+  {
+   "token": "\u028a",
+   "id": 193856,
+   "steps": 314
+  },
+  {
+   "token": " w",
+   "id": 289,
+   "steps": 306
+  },
+  {
+   "token": " m",
+   "id": 296,
+   "steps": 304
+  },
+  {
+   "token": "e",
+   "id": 68,
+   "steps": 284
+  },
+  {
+   "token": " st",
+   "id": 357,
+   "steps": 283
+  }
+ ],
+ "vocab": 194256,
+ "rows_kept": 65537,
+ "rows_dropped": 128719,
+ "dropped_fraction": 0.6626,
+ "dropped_mass": {
+  "mean": 3.2376484280261613e-05,
+  "median": 1.4326721324756857e-05,
+  "p99": 0.00027549280761280905,
+  "p99_9": 0.0009845228131424536,
+  "max": 0.004933481725213787
+ },
+ "kl_sliced_vs_full_nats": {
+  "mean": 3.238042416735977e-05,
+  "max": 0.004945691520601995
+ },
+ "dropped_rows_in_top_k": {
+  "slots": 0,
+  "of": 874900
+ },
+ "steps_where_a_dropped_row_was_in_top_k": 0,
+ "best_dropped_row_rank": {
+  "min": 335,
+  "median": 8330,
+  "p1": 2463
+ },
+ "logit_margin_cutoff_minus_best_dropped": {
+  "min": 2.482752799987793,
+  "median": 7.963522672653198
+ },
+ "macs_per_step": {
+  "layers": 116785152,
+  "lm_head_full": 111891456,
+  "lm_head_sliced": 37749312
+ },
+ "per_text": [
+  {
+   "text_id": 0,
+   "seed": 1000,
+   "steps": 118
+  },
+  {
+   "text_id": 0,
+   "seed": 1001,
+   "steps": 131
+  },
+  {
+   "text_id": 1,
+   "seed": 1000,
+   "steps": 142
+  },
+  {
+   "text_id": 1,
+   "seed": 1001,
+   "steps": 140
+  },
+  {
+   "text_id": 2,
+   "seed": 1000,
+   "steps": 131
+  },
+  {
+   "text_id": 2,
+   "seed": 1001,
+   "steps": 127
+  },
+  {
+   "text_id": 3,
+   "seed": 1000,
+   "steps": 160
+  },
+  {
+   "text_id": 3,
+   "seed": 1001,
+   "steps": 172
+  },
+  {
+   "text_id": 4,
+   "seed": 1000,
+   "steps": 117
+  },
+  {
+   "text_id": 4,
+   "seed": 1001,
+   "steps": 112
+  },
+  {
+   "text_id": 5,
+   "seed": 1000,
+   "steps": 128
+  },
+  {
+   "text_id": 5,
+   "seed": 1001,
+   "steps": 129
+  },
+  {
+   "text_id": 6,
+   "seed": 1000,
+   "steps": 139
+  },
+  {
+   "text_id": 6,
+   "seed": 1001,
+   "steps": 131
+  },
+  {
+   "text_id": 7,
+   "seed": 1000,
+   "steps": 112
+  },
+  {
+   "text_id": 7,
+   "seed": 1001,
+   "steps": 123
+  },
+  {
+   "text_id": 8,
+   "seed": 1000,
+   "steps": 169
+  },
+  {
+   "text_id": 8,
+   "seed": 1001,
+   "steps": 179
+  },
+  {
+   "text_id": 9,
+   "seed": 1000,
+   "steps": 123
+  },
+  {
+   "text_id": 9,
+   "seed": 1001,
+   "steps": 124
+  },
+  {
+   "text_id": 10,
+   "seed": 1000,
+   "steps": 101
+  },
+  {
+   "text_id": 10,
+   "seed": 1001,
+   "steps": 90
+  },
+  {
+   "text_id": 11,
+   "seed": 1000,
+   "steps": 117
+  },
+  {
+   "text_id": 11,
+   "seed": 1001,
+   "steps": 113
+  },
+  {
+   "text_id": 12,
+   "seed": 1000,
+   "steps": 135
+  },
+  {
+   "text_id": 12,
+   "seed": 1001,
+   "steps": 110
+  },
+  {
+   "text_id": 13,
+   "seed": 1000,
+   "steps": 129
+  },
+  {
+   "text_id": 13,
+   "seed": 1001,
+   "steps": 128
+  },
+  {
+   "text_id": 14,
+   "seed": 1000,
+   "steps": 108
+  },
+  {
+   "text_id": 14,
+   "seed": 1001,
+   "steps": 110
+  },
+  {
+   "text_id": 15,
+   "seed": 1000,
+   "steps": 107
+  },
+  {
+   "text_id": 15,
+   "seed": 1001,
+   "steps": 134
+  },
+  {
+   "text_id": 16,
+   "seed": 1000,
+   "steps": 112
+  },
+  {
+   "text_id": 16,
+   "seed": 1001,
+   "steps": 105
+  },
+  {
+   "text_id": 17,
+   "seed": 1000,
+   "steps": 124
+  },
+  {
+   "text_id": 17,
+   "seed": 1001,
+   "steps": 121
+  },
+  {
+   "text_id": 18,
+   "seed": 1000,
+   "steps": 107
+  },
+  {
+   "text_id": 18,
+   "seed": 1001,
+   "steps": 146
+  },
+  {
+   "text_id": 19,
+   "seed": 1000,
+   "steps": 120
+  },
+  {
+   "text_id": 19,
+   "seed": 1001,
+   "steps": 128
+  },
+  {
+   "text_id": 20,
+   "seed": 1000,
+   "steps": 143
+  },
+  {
+   "text_id": 20,
+   "seed": 1001,
+   "steps": 115
+  },
+  {
+   "text_id": 21,
+   "seed": 1000,
+   "steps": 140
+  },
+  {
+   "text_id": 21,
+   "seed": 1001,
+   "steps": 109
+  },
+  {
+   "text_id": 22,
+   "seed": 1000,
+   "steps": 115
+  },
+  {
+   "text_id": 22,
+   "seed": 1001,
+   "steps": 131
+  },
+  {
+   "text_id": 23,
+   "seed": 1000,
+   "steps": 178
+  },
+  {
+   "text_id": 23,
+   "seed": 1001,
+   "steps": 142
+  },
+  {
+   "text_id": 24,
+   "seed": 1000,
+   "steps": 126
+  },
+  {
+   "text_id": 24,
+   "seed": 1001,
+   "steps": 142
+  },
+  {
+   "text_id": 25,
+   "seed": 1000,
+   "steps": 120
+  },
+  {
+   "text_id": 25,
+   "seed": 1001,
+   "steps": 115
+  },
+  {
+   "text_id": 26,
+   "seed": 1000,
+   "steps": 140
+  },
+  {
+   "text_id": 26,
+   "seed": 1001,
+   "steps": 131
+  },
+  {
+   "text_id": 27,
+   "seed": 1000,
+   "steps": 191
+  },
+  {
+   "text_id": 27,
+   "seed": 1001,
+   "steps": 155
+  },
+  {
+   "text_id": 28,
+   "seed": 1000,
+   "steps": 128
+  },
+  {
+   "text_id": 28,
+   "seed": 1001,
+   "steps": 127
+  },
+  {
+   "text_id": 29,
+   "seed": 1000,
+   "steps": 150
+  },
+  {
+   "text_id": 29,
+   "seed": 1001,
+   "steps": 124
+  },
+  {
+   "text_id": 30,
+   "seed": 1000,
+   "steps": 130
+  },
+  {
+   "text_id": 30,
+   "seed": 1001,
+   "steps": 123
+  },
+  {
+   "text_id": 31,
+   "seed": 1000,
+   "steps": 105
+  },
+  {
+   "text_id": 31,
+   "seed": 1001,
+   "steps": 128
+  },
+  {
+   "text_id": 32,
+   "seed": 1000,
+   "steps": 89
+  },
+  {
+   "text_id": 32,
+   "seed": 1001,
+   "steps": 128
+  },
+  {
+   "text_id": 33,
+   "seed": 1000,
+   "steps": 119
+  },
+  {
+   "text_id": 33,
+   "seed": 1001,
+   "steps": 105
+  },
+  {
+   "text_id": 34,
+   "seed": 1000,
+   "steps": 138
+  },
+  {
+   "text_id": 34,
+   "seed": 1001,
+   "steps": 121
+  },
+  {
+   "text_id": 35,
+   "seed": 1000,
+   "steps": 122
+  },
+  {
+   "text_id": 35,
+   "seed": 1001,
+   "steps": 129
+  },
+  {
+   "text_id": 36,
+   "seed": 1000,
+   "steps": 110
+  },
+  {
+   "text_id": 36,
+   "seed": 1001,
+   "steps": 111
+  },
+  {
+   "text_id": 37,
+   "seed": 1000,
+   "steps": 113
+  },
+  {
+   "text_id": 37,
+   "seed": 1001,
+   "steps": 123
+  },
+  {
+   "text_id": 38,
+   "seed": 1000,
+   "steps": 163
+  },
+  {
+   "text_id": 38,
+   "seed": 1001,
+   "steps": 125
+  },
+  {
+   "text_id": 39,
+   "seed": 1000,
+   "steps": 131
+  },
+  {
+   "text_id": 39,
+   "seed": 1001,
+   "steps": 127
+  },
+  {
+   "text_id": 40,
+   "seed": 1000,
+   "steps": 351
+  },
+  {
+   "text_id": 40,
+   "seed": 1001,
+   "steps": 343
+  },
+  {
+   "text_id": 41,
+   "seed": 1000,
+   "steps": 354
+  },
+  {
+   "text_id": 41,
+   "seed": 1001,
+   "steps": 311
+  },
+  {
+   "text_id": 42,
+   "seed": 1000,
+   "steps": 351
+  },
+  {
+   "text_id": 42,
+   "seed": 1001,
+   "steps": 344
+  },
+  {
+   "text_id": 43,
+   "seed": 1000,
+   "steps": 331
+  },
+  {
+   "text_id": 43,
+   "seed": 1001,
+   "steps": 339
+  },
+  {
+   "text_id": 44,
+   "seed": 1000,
+   "steps": 332
+  },
+  {
+   "text_id": 44,
+   "seed": 1001,
+   "steps": 382
+  },
+  {
+   "text_id": 45,
+   "seed": 1000,
+   "steps": 368
+  },
+  {
+   "text_id": 45,
+   "seed": 1001,
+   "steps": 355
+  },
+  {
+   "text_id": 46,
+   "seed": 1000,
+   "steps": 435
+  },
+  {
+   "text_id": 46,
+   "seed": 1001,
+   "steps": 401
+  },
+  {
+   "text_id": 47,
+   "seed": 1000,
+   "steps": 378
+  },
+  {
+   "text_id": 47,
+   "seed": 1001,
+   "steps": 356
+  },
+  {
+   "text_id": 48,
+   "seed": 1000,
+   "steps": 381
+  },
+  {
+   "text_id": 48,
+   "seed": 1001,
+   "steps": 401
+  },
+  {
+   "text_id": 49,
+   "seed": 1000,
+   "steps": 390
+  },
+  {
+   "text_id": 49,
+   "seed": 1001,
+   "steps": 381
+  }
+ ]
+}

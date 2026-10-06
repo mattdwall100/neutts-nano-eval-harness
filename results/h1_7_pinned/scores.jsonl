@@ -1,0 +1,20 @@
+{"text_id": 10, "repeat": 0, "seed": 1000, "wav": "t10_r0.wav", "audio_s": 2.08, "hyp": "type out three lists of orders.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.5547}
+{"text_id": 11, "repeat": 0, "seed": 1000, "wav": "t11_r0.wav", "audio_s": 2.76, "hyp": "pluck the bright rose without leaves.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.4433}
+{"text_id": 12, "repeat": 0, "seed": 1000, "wav": "t12_r0.wav", "audio_s": 2.56, "hyp": "These thistles bend in a high wind.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.6463}
+{"text_id": 13, "repeat": 0, "seed": 1000, "wav": "t13_r0.wav", "audio_s": 2.36, "hyp": "The pirates seized the crew of the lost ship.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.5174}
+{"text_id": 14, "repeat": 0, "seed": 1000, "wav": "t14_r0.wav", "audio_s": 2.06, "hyp": "A rag will soak up spilled water.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4855}
+{"text_id": 15, "repeat": 0, "seed": 1000, "wav": "t15_r0.wav", "audio_s": 2.48, "hyp": "acid burns holes in wool cloth.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.5994}
+{"text_id": 16, "repeat": 0, "seed": 1000, "wav": "t16_r0.wav", "audio_s": 2.64, "hyp": "Where were they when the noise started?", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.6382}
+{"text_id": 17, "repeat": 0, "seed": 1000, "wav": "t17_r0.wav", "audio_s": 2.44, "hyp": "A fresh start will work such wonders.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4973}
+{"text_id": 18, "repeat": 0, "seed": 1000, "wav": "t18_r0.wav", "audio_s": 3.46, "hyp": "It is hard to erase blue or red ink.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.6479}
+{"text_id": 19, "repeat": 0, "seed": 1000, "wav": "t19_r0.wav", "audio_s": 1.92, "hyp": "Break the rubbish up and then burn it.", "word_errors": 1, "ref_words": 8, "wer": 0.125, "spk_sim": 0.4254}
+{"text_id": 10, "repeat": 1, "seed": 1001, "wav": "t10_r1.wav", "audio_s": 2.14, "hyp": "type out three lists of orders.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.4286}
+{"text_id": 11, "repeat": 1, "seed": 1001, "wav": "t11_r1.wav", "audio_s": 2.84, "hyp": "pluck the bright rose without leaves.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.4281}
+{"text_id": 12, "repeat": 1, "seed": 1001, "wav": "t12_r1.wav", "audio_s": 2.12, "hyp": "These thistles bend in a high wind.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.6108}
+{"text_id": 13, "repeat": 1, "seed": 1001, "wav": "t13_r1.wav", "audio_s": 2.54, "hyp": "The pirate sees the crew of the lost ship.", "word_errors": 2, "ref_words": 9, "wer": 0.2222, "spk_sim": 0.4511}
+{"text_id": 14, "repeat": 1, "seed": 1001, "wav": "t14_r1.wav", "audio_s": 2.48, "hyp": "A rag will soak up spilled water.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.2483}
+{"text_id": 15, "repeat": 1, "seed": 1001, "wav": "t15_r1.wav", "audio_s": 2.64, "hyp": "as it burns holes in wool cloth.", "word_errors": 2, "ref_words": 6, "wer": 0.3333, "spk_sim": 0.6293}
+{"text_id": 16, "repeat": 1, "seed": 1001, "wav": "t16_r1.wav", "audio_s": 2.8, "hyp": "Where were they when the noise started?", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.2084}
+{"text_id": 17, "repeat": 1, "seed": 1001, "wav": "t17_r1.wav", "audio_s": 2.5, "hyp": "A fresh start will work such wonders.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4007}
+{"text_id": 18, "repeat": 1, "seed": 1001, "wav": "t18_r1.wav", "audio_s": 2.72, "hyp": "It is hard to erase blue or red ink.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.5169}
+{"text_id": 19, "repeat": 1, "seed": 1001, "wav": "t19_r1.wav", "audio_s": 2.36, "hyp": "rake the rubbish up and then burn it.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.2798}

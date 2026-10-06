@@ -1,0 +1,56 @@
+{"round": 0, "setting": "P", "threads": 1, "threads_batch": 1, "prefill_tok_s": 174.7, "decode_tok_s": 38.5, "loop_tok_s": 35.7, "steps": 119}
+{"round": 0, "setting": "P", "threads": 2, "threads_batch": 2, "prefill_tok_s": 277.0, "decode_tok_s": 55.7, "loop_tok_s": 50.7, "steps": 119}
+{"round": 0, "setting": "P", "threads": 3, "threads_batch": 3, "prefill_tok_s": 294.0, "decode_tok_s": 58.9, "loop_tok_s": 52.6, "steps": 119}
+{"round": 0, "setting": "P", "threads": 4, "threads_batch": 4, "prefill_tok_s": 295.0, "decode_tok_s": 65.0, "loop_tok_s": 56.0, "steps": 119}
+{"round": 0, "setting": "all", "threads": 2, "threads_batch": 2, "prefill_tok_s": 264.7, "decode_tok_s": 56.2, "loop_tok_s": 49.9, "steps": 119}
+{"round": 0, "setting": "all", "threads": 4, "threads_batch": 4, "prefill_tok_s": 253.4, "decode_tok_s": 57.8, "loop_tok_s": 50.4, "steps": 119}
+{"round": 0, "setting": "all", "threads": 6, "threads_batch": 6, "prefill_tok_s": 289.4, "decode_tok_s": 62.9, "loop_tok_s": 53.8, "steps": 119}
+{"round": 0, "setting": "all", "threads": 8, "threads_batch": 8, "prefill_tok_s": 328.4, "decode_tok_s": 61.7, "loop_tok_s": 52.2, "steps": 119}
+{"round": 0, "setting": "all", "threads": 10, "threads_batch": 10, "prefill_tok_s": 356.1, "decode_tok_s": 53.6, "loop_tok_s": 46.1, "steps": 119}
+{"round": 0, "setting": "all", "threads": 12, "threads_batch": 12, "prefill_tok_s": 353.5, "decode_tok_s": 47.8, "loop_tok_s": 41.7, "steps": 119}
+{"round": 0, "setting": "ref 6/12 all", "threads": 6, "threads_batch": 12, "prefill_tok_s": 340.2, "decode_tok_s": 56.8, "loop_tok_s": 48.6, "steps": 119}
+{"round": 0, "setting": "4/10 all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 329.4, "decode_tok_s": 57.0, "loop_tok_s": 48.6, "steps": 119}
+{"round": 0, "setting": "4/10 dyn P|all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 343.9, "decode_tok_s": 61.7, "loop_tok_s": 51.4, "steps": 119}
+{"round": 0, "setting": "4/8 dyn P|all", "threads": 4, "threads_batch": 8, "prefill_tok_s": 316.5, "decode_tok_s": 63.1, "loop_tok_s": 52.6, "steps": 119}
+{"round": 1, "setting": "P", "threads": 1, "threads_batch": 1, "prefill_tok_s": 173.0, "decode_tok_s": 35.4, "loop_tok_s": 32.7, "steps": 119}
+{"round": 1, "setting": "P", "threads": 2, "threads_batch": 2, "prefill_tok_s": 220.5, "decode_tok_s": 51.5, "loop_tok_s": 46.5, "steps": 119}
+{"round": 1, "setting": "P", "threads": 3, "threads_batch": 3, "prefill_tok_s": 283.6, "decode_tok_s": 60.5, "loop_tok_s": 53.6, "steps": 119}
+{"round": 1, "setting": "P", "threads": 4, "threads_batch": 4, "prefill_tok_s": 300.3, "decode_tok_s": 65.0, "loop_tok_s": 56.2, "steps": 119}
+{"round": 1, "setting": "all", "threads": 2, "threads_batch": 2, "prefill_tok_s": 260.6, "decode_tok_s": 53.9, "loop_tok_s": 47.7, "steps": 119}
+{"round": 1, "setting": "all", "threads": 4, "threads_batch": 4, "prefill_tok_s": 261.8, "decode_tok_s": 55.7, "loop_tok_s": 49.3, "steps": 119}
+{"round": 1, "setting": "all", "threads": 6, "threads_batch": 6, "prefill_tok_s": 287.6, "decode_tok_s": 61.2, "loop_tok_s": 52.0, "steps": 119}
+{"round": 1, "setting": "all", "threads": 8, "threads_batch": 8, "prefill_tok_s": 319.5, "decode_tok_s": 58.1, "loop_tok_s": 49.7, "steps": 119}
+{"round": 1, "setting": "all", "threads": 10, "threads_batch": 10, "prefill_tok_s": 347.9, "decode_tok_s": 58.3, "loop_tok_s": 49.2, "steps": 119}
+{"round": 1, "setting": "all", "threads": 12, "threads_batch": 12, "prefill_tok_s": 352.1, "decode_tok_s": 47.4, "loop_tok_s": 41.1, "steps": 119}
+{"round": 1, "setting": "ref 6/12 all", "threads": 6, "threads_batch": 12, "prefill_tok_s": 362.6, "decode_tok_s": 56.1, "loop_tok_s": 48.0, "steps": 119}
+{"round": 1, "setting": "4/10 all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 332.2, "decode_tok_s": 53.5, "loop_tok_s": 45.8, "steps": 119}
+{"round": 1, "setting": "4/10 dyn P|all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 327.0, "decode_tok_s": 61.0, "loop_tok_s": 51.4, "steps": 119}
+{"round": 1, "setting": "4/8 dyn P|all", "threads": 4, "threads_batch": 8, "prefill_tok_s": 332.1, "decode_tok_s": 64.6, "loop_tok_s": 54.7, "steps": 119}
+{"round": 2, "setting": "P", "threads": 1, "threads_batch": 1, "prefill_tok_s": 175.9, "decode_tok_s": 38.4, "loop_tok_s": 35.4, "steps": 119}
+{"round": 2, "setting": "P", "threads": 2, "threads_batch": 2, "prefill_tok_s": 260.9, "decode_tok_s": 50.8, "loop_tok_s": 46.3, "steps": 119}
+{"round": 2, "setting": "P", "threads": 3, "threads_batch": 3, "prefill_tok_s": 294.9, "decode_tok_s": 59.4, "loop_tok_s": 52.5, "steps": 119}
+{"round": 2, "setting": "P", "threads": 4, "threads_batch": 4, "prefill_tok_s": 289.1, "decode_tok_s": 66.0, "loop_tok_s": 57.5, "steps": 119}
+{"round": 2, "setting": "all", "threads": 2, "threads_batch": 2, "prefill_tok_s": 259.6, "decode_tok_s": 54.9, "loop_tok_s": 49.2, "steps": 119}
+{"round": 2, "setting": "all", "threads": 4, "threads_batch": 4, "prefill_tok_s": 254.5, "decode_tok_s": 56.5, "loop_tok_s": 49.8, "steps": 119}
+{"round": 2, "setting": "all", "threads": 6, "threads_batch": 6, "prefill_tok_s": 284.4, "decode_tok_s": 59.7, "loop_tok_s": 51.3, "steps": 119}
+{"round": 2, "setting": "all", "threads": 8, "threads_batch": 8, "prefill_tok_s": 329.1, "decode_tok_s": 55.6, "loop_tok_s": 47.7, "steps": 119}
+{"round": 2, "setting": "all", "threads": 10, "threads_batch": 10, "prefill_tok_s": 348.2, "decode_tok_s": 54.6, "loop_tok_s": 46.6, "steps": 119}
+{"round": 2, "setting": "all", "threads": 12, "threads_batch": 12, "prefill_tok_s": 346.9, "decode_tok_s": 47.0, "loop_tok_s": 41.1, "steps": 119}
+{"round": 2, "setting": "ref 6/12 all", "threads": 6, "threads_batch": 12, "prefill_tok_s": 352.1, "decode_tok_s": 57.5, "loop_tok_s": 49.3, "steps": 119}
+{"round": 2, "setting": "4/10 all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 347.7, "decode_tok_s": 55.8, "loop_tok_s": 48.4, "steps": 119}
+{"round": 2, "setting": "4/10 dyn P|all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 339.9, "decode_tok_s": 62.5, "loop_tok_s": 52.6, "steps": 119}
+{"round": 2, "setting": "4/8 dyn P|all", "threads": 4, "threads_batch": 8, "prefill_tok_s": 326.6, "decode_tok_s": 62.8, "loop_tok_s": 53.6, "steps": 119}
+{"round": 3, "setting": "P", "threads": 1, "threads_batch": 1, "prefill_tok_s": 180.1, "decode_tok_s": 38.5, "loop_tok_s": 35.6, "steps": 119}
+{"round": 3, "setting": "P", "threads": 2, "threads_batch": 2, "prefill_tok_s": 261.2, "decode_tok_s": 52.4, "loop_tok_s": 48.0, "steps": 119}
+{"round": 3, "setting": "P", "threads": 3, "threads_batch": 3, "prefill_tok_s": 283.8, "decode_tok_s": 58.0, "loop_tok_s": 51.7, "steps": 119}
+{"round": 3, "setting": "P", "threads": 4, "threads_batch": 4, "prefill_tok_s": 297.5, "decode_tok_s": 57.7, "loop_tok_s": 50.6, "steps": 119}
+{"round": 3, "setting": "all", "threads": 2, "threads_batch": 2, "prefill_tok_s": 257.0, "decode_tok_s": 53.6, "loop_tok_s": 47.8, "steps": 119}
+{"round": 3, "setting": "all", "threads": 4, "threads_batch": 4, "prefill_tok_s": 256.4, "decode_tok_s": 58.8, "loop_tok_s": 51.9, "steps": 119}
+{"round": 3, "setting": "all", "threads": 6, "threads_batch": 6, "prefill_tok_s": 280.3, "decode_tok_s": 58.8, "loop_tok_s": 51.0, "steps": 119}
+{"round": 3, "setting": "all", "threads": 8, "threads_batch": 8, "prefill_tok_s": 322.1, "decode_tok_s": 57.8, "loop_tok_s": 49.0, "steps": 119}
+{"round": 3, "setting": "all", "threads": 10, "threads_batch": 10, "prefill_tok_s": 345.0, "decode_tok_s": 53.8, "loop_tok_s": 46.1, "steps": 119}
+{"round": 3, "setting": "all", "threads": 12, "threads_batch": 12, "prefill_tok_s": 338.6, "decode_tok_s": 44.2, "loop_tok_s": 38.9, "steps": 119}
+{"round": 3, "setting": "ref 6/12 all", "threads": 6, "threads_batch": 12, "prefill_tok_s": 346.2, "decode_tok_s": 57.2, "loop_tok_s": 48.6, "steps": 119}
+{"round": 3, "setting": "4/10 all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 340.1, "decode_tok_s": 52.9, "loop_tok_s": 46.0, "steps": 119}
+{"round": 3, "setting": "4/10 dyn P|all", "threads": 4, "threads_batch": 10, "prefill_tok_s": 347.2, "decode_tok_s": 62.6, "loop_tok_s": 52.6, "steps": 119}
+{"round": 3, "setting": "4/8 dyn P|all", "threads": 4, "threads_batch": 8, "prefill_tok_s": 335.8, "decode_tok_s": 62.7, "loop_tok_s": 53.4, "steps": 119}

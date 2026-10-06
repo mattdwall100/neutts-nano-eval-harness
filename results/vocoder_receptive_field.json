@@ -1,0 +1,37 @@
+[
+ {
+  "lookback": 0,
+  "logmel_db": 4.23,
+  "redundancy": 1.2
+ },
+ {
+  "lookback": 5,
+  "logmel_db": 5.18,
+  "redundancy": 1.4
+ },
+ {
+  "lookback": 10,
+  "logmel_db": 3.61,
+  "redundancy": 1.6
+ },
+ {
+  "lookback": 15,
+  "logmel_db": 3.51,
+  "redundancy": 1.8
+ },
+ {
+  "lookback": 25,
+  "logmel_db": 3.3,
+  "redundancy": 2.2
+ },
+ {
+  "lookback": 50,
+  "logmel_db": 2.88,
+  "redundancy": 3.2
+ },
+ {
+  "lookback": 100,
+  "logmel_db": 2.48,
+  "redundancy": 5.2
+ }
+]

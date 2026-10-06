@@ -1,0 +1,2 @@
+{"text_id": 10, "repeat": 0, "seed": 1000, "wav": "t10_r0.wav", "audio_s": 1.78, "hyp": "Type out three lists of orders.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.4829}
+{"text_id": 11, "repeat": 0, "seed": 1000, "wav": "t11_r0.wav", "audio_s": 1.94, "hyp": "Pluck the bright rose without leaves.", "word_errors": 0, "ref_words": 6, "wer": 0.0, "spk_sim": 0.4538}

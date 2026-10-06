@@ -1,0 +1,22 @@
+{
+  "name": "b1_q4_onnx8",
+  "backbone": "neuphonic/neutts-nano-q4-gguf",
+  "codec": "neuphonic/neucodec-onnx-decoder-int8",
+  "dtype": null,
+  "watermark": true,
+  "threads": null,
+  "ref_audio": "samples/jo.wav",
+  "ref_text": "samples/jo.txt",
+  "corpus": "corpus.txt",
+  "limit": 6,
+  "max_other_cpu": 20.0,
+  "preflight_other_cpu_pct": 6.0,
+  "high_priority": true,
+  "load_s": 4.269,
+  "rss_after_load_mb": 894.3,
+  "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+  "cores": 12,
+  "power_scheme": "best performance (ac=True)",
+  "python": "3.12.13",
+  "torch": "2.14.1+cpu"
+}

@@ -1,0 +1,12 @@
+{"text_id": 0, "repeat": 0, "seed": 1000, "wav": "t00_r0.wav", "audio_s": 3.06, "hyp": "The birch canoe slid on the smooth planks.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.4639}
+{"text_id": 1, "repeat": 0, "seed": 1000, "wav": "t01_r0.wav", "audio_s": 2.88, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.3429}
+{"text_id": 2, "repeat": 0, "seed": 1000, "wav": "t02_r0.wav", "audio_s": 2.7, "hyp": "The beauty of the view stunned the young boy.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.166}
+{"text_id": 3, "repeat": 0, "seed": 1000, "wav": "t03_r0.wav", "audio_s": 2.86, "hyp": "The stray cat gave birth to kittens.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4031}
+{"text_id": 4, "repeat": 0, "seed": 1000, "wav": "t04_r0.wav", "audio_s": 2.54, "hyp": "the friendly gang left the drug store.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.3288}
+{"text_id": 5, "repeat": 0, "seed": 1000, "wav": "t05_r0.wav", "audio_s": 3.36, "hyp": "We talked of the side show in the circus.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.4568}
+{"text_id": 0, "repeat": 1, "seed": 1001, "wav": "t00_r1.wav", "audio_s": 3.12, "hyp": "The birch canoe slid on the smooth planks", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.4667}
+{"text_id": 1, "repeat": 1, "seed": 1001, "wav": "t01_r1.wav", "audio_s": 3.12, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.3858}
+{"text_id": 2, "repeat": 1, "seed": 1001, "wav": "t02_r1.wav", "audio_s": 2.74, "hyp": "The beauty of the view stunned the young boy.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.3041}
+{"text_id": 3, "repeat": 1, "seed": 1001, "wav": "t03_r1.wav", "audio_s": 2.5, "hyp": "The stray cat gave birth to kittens.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4233}
+{"text_id": 4, "repeat": 1, "seed": 1001, "wav": "t04_r1.wav", "audio_s": 2.4, "hyp": "The friendly gang left the drug store.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.1065}
+{"text_id": 5, "repeat": 1, "seed": 1001, "wav": "t05_r1.wav", "audio_s": 2.66, "hyp": "We talked of the sideshow in the circus.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.3323}

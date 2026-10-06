@@ -1,0 +1,12 @@
+{"text_id": 0, "repeat": 0, "seed": 1000, "wav": "t00_r0.wav", "audio_s": 2.3, "hyp": "The birch canoe slid on the smooth planks.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.4278}
+{"text_id": 0, "repeat": 1, "seed": 1001, "wav": "t00_r1.wav", "audio_s": 2.48, "hyp": "The birch canoe slid on the smooth planks.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.4933}
+{"text_id": 1, "repeat": 0, "seed": 1000, "wav": "t01_r0.wav", "audio_s": 2.72, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.4574}
+{"text_id": 1, "repeat": 1, "seed": 1001, "wav": "t01_r1.wav", "audio_s": 2.46, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.372}
+{"text_id": 2, "repeat": 0, "seed": 1000, "wav": "t02_r0.wav", "audio_s": 2.04, "hyp": "The beauty of the view stunned the young boy.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.3425}
+{"text_id": 2, "repeat": 1, "seed": 1001, "wav": "t02_r1.wav", "audio_s": 2.02, "hyp": "The beauty of the view stunned the young boy.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.4024}
+{"text_id": 3, "repeat": 0, "seed": 1000, "wav": "t03_r0.wav", "audio_s": 2.2, "hyp": "The stray cat gave birth to kittens.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.3427}
+{"text_id": 3, "repeat": 1, "seed": 1001, "wav": "t03_r1.wav", "audio_s": 2.18, "hyp": "The Stray Cat gave birth to kittens.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.5443}
+{"text_id": 4, "repeat": 0, "seed": 1000, "wav": "t04_r0.wav", "audio_s": 2.2, "hyp": "The friendly gang left the drug store.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4537}
+{"text_id": 4, "repeat": 1, "seed": 1001, "wav": "t04_r1.wav", "audio_s": 1.9, "hyp": "The friendly gang left the drug store.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.5201}
+{"text_id": 5, "repeat": 0, "seed": 1000, "wav": "t05_r0.wav", "audio_s": 2.34, "hyp": "We talked of the sideshow in the circus.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.4735}
+{"text_id": 5, "repeat": 1, "seed": 1001, "wav": "t05_r1.wav", "audio_s": 2.22, "hyp": "We talked to the sideshow in the circus.", "word_errors": 1, "ref_words": 9, "wer": 0.1111, "spk_sim": 0.511}

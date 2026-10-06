@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.cache/
+# raw audio from runs is not committed; tables, summaries, rows and figures are
+results/**/*.wav
+results/*.log
+# portable toolchain, llama.cpp source and experimental builds are not committed
+tools/

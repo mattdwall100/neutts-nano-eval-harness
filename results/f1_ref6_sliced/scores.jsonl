@@ -1,0 +1,20 @@
+{"text_id": 0, "repeat": 0, "seed": 1000, "wav": "t00_r0.wav", "audio_s": 2.5, "hyp": "The birch canoe slid on the smooth planks.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.546}
+{"text_id": 1, "repeat": 0, "seed": 1000, "wav": "t01_r0.wav", "audio_s": 3.52, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.3153}
+{"text_id": 2, "repeat": 0, "seed": 1000, "wav": "t02_r0.wav", "audio_s": 2.52, "hyp": "the beauty of the views done by the young boy.", "word_errors": 3, "ref_words": 9, "wer": 0.3333, "spk_sim": 0.3279}
+{"text_id": 3, "repeat": 0, "seed": 1000, "wav": "t03_r0.wav", "audio_s": 2.7, "hyp": "The stray cat gave birth to kittens.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.5861}
+{"text_id": 4, "repeat": 0, "seed": 1000, "wav": "t04_r0.wav", "audio_s": 2.54, "hyp": "the friendly gang left the drugstore.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4892}
+{"text_id": 5, "repeat": 0, "seed": 1000, "wav": "t05_r0.wav", "audio_s": 2.9, "hyp": "We talked of the sideshow in the circus.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.5615}
+{"text_id": 6, "repeat": 0, "seed": 1000, "wav": "t06_r0.wav", "audio_s": 3.24, "hyp": "The ink stain dried on the finished page.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.5651}
+{"text_id": 7, "repeat": 0, "seed": 1000, "wav": "t07_r0.wav", "audio_s": 2.36, "hyp": "the lawyer tried to lose his case.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.5532}
+{"text_id": 8, "repeat": 0, "seed": 1000, "wav": "t08_r0.wav", "audio_s": 2.92, "hyp": "The term ended in late June that year.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.612}
+{"text_id": 9, "repeat": 0, "seed": 1000, "wav": "t09_r0.wav", "audio_s": 2.18, "hyp": "The hog crawled under the high fence.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4222}
+{"text_id": 0, "repeat": 1, "seed": 1001, "wav": "t00_r1.wav", "audio_s": 2.64, "hyp": "The birch canoe slid on the smooth planks.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.5075}
+{"text_id": 1, "repeat": 1, "seed": 1001, "wav": "t01_r1.wav", "audio_s": 2.94, "hyp": "The source of the huge river is the clear spring.", "word_errors": 0, "ref_words": 10, "wer": 0.0, "spk_sim": 0.468}
+{"text_id": 2, "repeat": 1, "seed": 1001, "wav": "t02_r1.wav", "audio_s": 2.34, "hyp": "The beauty of the view stunned the young boy.", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.4383}
+{"text_id": 3, "repeat": 1, "seed": 1001, "wav": "t03_r1.wav", "audio_s": 2.18, "hyp": "The straight cat gave birth to kittens.", "word_errors": 1, "ref_words": 7, "wer": 0.1429, "spk_sim": 0.5107}
+{"text_id": 4, "repeat": 1, "seed": 1001, "wav": "t04_r1.wav", "audio_s": 2.34, "hyp": "The friendly gang left the drugstore.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.5128}
+{"text_id": 5, "repeat": 1, "seed": 1001, "wav": "t05_r1.wav", "audio_s": 2.5, "hyp": "We talked of the sideshow in the circus", "word_errors": 0, "ref_words": 9, "wer": 0.0, "spk_sim": 0.4761}
+{"text_id": 6, "repeat": 1, "seed": 1001, "wav": "t06_r1.wav", "audio_s": 2.9, "hyp": "the ink stain dried on the finished page.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.5279}
+{"text_id": 7, "repeat": 1, "seed": 1001, "wav": "t07_r1.wav", "audio_s": 2.64, "hyp": "the lawyer tried to lose his case.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.4856}
+{"text_id": 8, "repeat": 1, "seed": 1001, "wav": "t08_r1.wav", "audio_s": 2.86, "hyp": "The term ended in late June that year.", "word_errors": 0, "ref_words": 8, "wer": 0.0, "spk_sim": 0.6176}
+{"text_id": 9, "repeat": 1, "seed": 1001, "wav": "t09_r1.wav", "audio_s": 2.5, "hyp": "the hog crawled under the high fence.", "word_errors": 0, "ref_words": 7, "wer": 0.0, "spk_sim": 0.2126}

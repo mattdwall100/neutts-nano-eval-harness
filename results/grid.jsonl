@@ -1,0 +1,105 @@
+{"build": "generic, unsliced", "policy": "default", "threads": "6/12", "round": 0, "prefill": 747.0, "decode": 110.5, "decode_interrupted": 101.7}
+{"build": "generic, unsliced", "policy": "default", "threads": "6/8", "round": 0, "prefill": 689.5, "decode": 117.1, "decode_interrupted": 102.9}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 0, "prefill": 774.3, "decode": 109.8, "decode_interrupted": 107.4}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 0, "prefill": 718.3, "decode": 107.2, "decode_interrupted": 107.6}
+{"build": "generic, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 0, "prefill": 741.2, "decode": 89.5, "decode_interrupted": 91.1}
+{"build": "native, unsliced", "policy": "default", "threads": "6/12", "round": 0, "prefill": 963.3, "decode": 107.9, "decode_interrupted": 102.1}
+{"build": "native, unsliced", "policy": "default", "threads": "6/8", "round": 0, "prefill": 801.3, "decode": 114.1, "decode_interrupted": 107.6}
+{"build": "native, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 0, "prefill": 820.9, "decode": 109.8, "decode_interrupted": 107.7}
+{"build": "native, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 0, "prefill": 829.8, "decode": 108.8, "decode_interrupted": 105.6}
+{"build": "native, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 0, "prefill": 829.9, "decode": 93.2, "decode_interrupted": 94.0}
+{"build": "generic, sliced", "policy": "default", "threads": "6/12", "round": 0, "prefill": 534.1, "decode": 95.6, "decode_interrupted": 99.4}
+{"build": "generic, sliced", "policy": "default", "threads": "6/8", "round": 0, "prefill": 392.1, "decode": 107.8, "decode_interrupted": 96.4}
+{"build": "generic, sliced", "policy": "default", "threads": "4/12 pinP", "round": 0, "prefill": 397.1, "decode": 111.6, "decode_interrupted": 110.8}
+{"build": "generic, sliced", "policy": "default", "threads": "4/8 pinP", "round": 0, "prefill": 399.4, "decode": 117.8, "decode_interrupted": 109.3}
+{"build": "generic, sliced", "policy": "default", "threads": "2/12 pinP", "round": 0, "prefill": 504.3, "decode": 99.3, "decode_interrupted": 91.2}
+{"build": "native, sliced", "policy": "active", "threads": "6/12", "round": 0, "prefill": 470.1, "decode": 49.0, "decode_interrupted": 55.5}
+{"build": "native, sliced", "policy": "active", "threads": "6/8", "round": 0, "prefill": 441.6, "decode": 50.2, "decode_interrupted": 55.8}
+{"build": "native, sliced", "policy": "active", "threads": "4/12 pinP", "round": 0, "prefill": 732.7, "decode": 71.5, "decode_interrupted": 76.6}
+{"build": "native, sliced", "policy": "active", "threads": "4/8 pinP", "round": 0, "prefill": 641.7, "decode": 77.2, "decode_interrupted": 78.3}
+{"build": "native, sliced", "policy": "active", "threads": "2/12 pinP", "round": 0, "prefill": 716.7, "decode": 95.8, "decode_interrupted": 91.4}
+{"build": "native, sliced", "policy": "passive", "threads": "6/12", "round": 0, "prefill": 640.9, "decode": 117.2, "decode_interrupted": 123.7}
+{"build": "native, sliced", "policy": "passive", "threads": "6/8", "round": 0, "prefill": 630.8, "decode": 130.6, "decode_interrupted": 112.1}
+{"build": "native, sliced", "policy": "passive", "threads": "4/12 pinP", "round": 0, "prefill": 654.4, "decode": 137.6, "decode_interrupted": 135.1}
+{"build": "native, sliced", "policy": "passive", "threads": "4/8 pinP", "round": 0, "prefill": 673.6, "decode": 151.5, "decode_interrupted": 126.4}
+{"build": "native, sliced", "policy": "passive", "threads": "2/12 pinP", "round": 0, "prefill": 741.4, "decode": 115.0, "decode_interrupted": 114.7}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/12", "round": 0, "prefill": 704.2, "decode": 98.1, "decode_interrupted": 89.5}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/8", "round": 0, "prefill": 566.0, "decode": 113.2, "decode_interrupted": 100.5}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/12 pinP", "round": 0, "prefill": 549.1, "decode": 87.7, "decode_interrupted": 87.9}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/8 pinP", "round": 0, "prefill": 598.9, "decode": 94.1, "decode_interrupted": 79.6}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "2/12 pinP", "round": 0, "prefill": 685.3, "decode": 111.4, "decode_interrupted": 111.7}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/12", "round": 0, "prefill": 517.4, "decode": 113.3, "decode_interrupted": 115.7}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/8", "round": 0, "prefill": 578.0, "decode": 122.0, "decode_interrupted": 112.1}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/12 pinP", "round": 0, "prefill": 651.8, "decode": 124.8, "decode_interrupted": 130.0}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/8 pinP", "round": 0, "prefill": 533.0, "decode": 135.4, "decode_interrupted": 138.7}
+{"build": "native, sliced, lto", "policy": "default", "threads": "2/12 pinP", "round": 0, "prefill": 618.6, "decode": 107.8, "decode_interrupted": 109.3}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/12", "round": 1, "prefill": 552.1, "decode": 111.8, "decode_interrupted": 112.6}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/8", "round": 1, "prefill": 566.0, "decode": 121.3, "decode_interrupted": 113.2}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/12 pinP", "round": 1, "prefill": 589.7, "decode": 124.2, "decode_interrupted": 126.5}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/8 pinP", "round": 1, "prefill": 502.3, "decode": 134.2, "decode_interrupted": 135.3}
+{"build": "native, sliced, lto", "policy": "default", "threads": "2/12 pinP", "round": 1, "prefill": 569.2, "decode": 109.4, "decode_interrupted": 116.3}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/12", "round": 1, "prefill": 570.5, "decode": 96.3, "decode_interrupted": 87.6}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/8", "round": 1, "prefill": 562.8, "decode": 94.4, "decode_interrupted": 89.7}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/12 pinP", "round": 1, "prefill": 595.8, "decode": 91.6, "decode_interrupted": 75.8}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/8 pinP", "round": 1, "prefill": 541.8, "decode": 78.8, "decode_interrupted": 81.1}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "2/12 pinP", "round": 1, "prefill": 648.6, "decode": 114.7, "decode_interrupted": 101.0}
+{"build": "native, sliced", "policy": "passive", "threads": "6/12", "round": 1, "prefill": 517.6, "decode": 115.4, "decode_interrupted": 99.3}
+{"build": "native, sliced", "policy": "passive", "threads": "6/8", "round": 1, "prefill": 527.0, "decode": 125.5, "decode_interrupted": 99.2}
+{"build": "native, sliced", "policy": "passive", "threads": "4/12 pinP", "round": 1, "prefill": 555.5, "decode": 128.6, "decode_interrupted": 124.4}
+{"build": "native, sliced", "policy": "passive", "threads": "4/8 pinP", "round": 1, "prefill": 520.4, "decode": 133.4, "decode_interrupted": 123.8}
+{"build": "native, sliced", "policy": "passive", "threads": "2/12 pinP", "round": 1, "prefill": 543.1, "decode": 109.5, "decode_interrupted": 106.7}
+{"build": "native, sliced", "policy": "active", "threads": "6/12", "round": 1, "prefill": 463.0, "decode": 49.0, "decode_interrupted": 41.5}
+{"build": "native, sliced", "policy": "active", "threads": "6/8", "round": 1, "prefill": 414.2, "decode": 46.3, "decode_interrupted": 46.6}
+{"build": "native, sliced", "policy": "active", "threads": "4/12 pinP", "round": 1, "prefill": 433.0, "decode": 61.0, "decode_interrupted": 60.2}
+{"build": "native, sliced", "policy": "active", "threads": "4/8 pinP", "round": 1, "prefill": 517.2, "decode": 62.5, "decode_interrupted": 62.8}
+{"build": "native, sliced", "policy": "active", "threads": "2/12 pinP", "round": 1, "prefill": 578.3, "decode": 78.3, "decode_interrupted": 79.4}
+{"build": "generic, sliced", "policy": "default", "threads": "6/12", "round": 1, "prefill": 419.9, "decode": 101.6, "decode_interrupted": 98.7}
+{"build": "generic, sliced", "policy": "default", "threads": "6/8", "round": 1, "prefill": 412.6, "decode": 109.9, "decode_interrupted": 95.5}
+{"build": "generic, sliced", "policy": "default", "threads": "4/12 pinP", "round": 1, "prefill": 411.8, "decode": 111.7, "decode_interrupted": 114.9}
+{"build": "generic, sliced", "policy": "default", "threads": "4/8 pinP", "round": 1, "prefill": 444.1, "decode": 118.4, "decode_interrupted": 110.6}
+{"build": "generic, sliced", "policy": "default", "threads": "2/12 pinP", "round": 1, "prefill": 481.2, "decode": 105.7, "decode_interrupted": 85.3}
+{"build": "native, unsliced", "policy": "default", "threads": "6/12", "round": 1, "prefill": 490.4, "decode": 88.2, "decode_interrupted": 75.4}
+{"build": "native, unsliced", "policy": "default", "threads": "6/8", "round": 1, "prefill": 517.4, "decode": 89.0, "decode_interrupted": 79.2}
+{"build": "native, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 1, "prefill": 579.8, "decode": 82.6, "decode_interrupted": 85.6}
+{"build": "native, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 1, "prefill": 492.1, "decode": 93.8, "decode_interrupted": 83.8}
+{"build": "native, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 1, "prefill": 566.4, "decode": 75.6, "decode_interrupted": 69.4}
+{"build": "generic, unsliced", "policy": "default", "threads": "6/12", "round": 1, "prefill": 406.3, "decode": 85.4, "decode_interrupted": 73.0}
+{"build": "generic, unsliced", "policy": "default", "threads": "6/8", "round": 1, "prefill": 429.4, "decode": 69.4, "decode_interrupted": 50.2}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 1, "prefill": 365.3, "decode": 84.0, "decode_interrupted": 80.5}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 1, "prefill": 415.6, "decode": 88.9, "decode_interrupted": 81.0}
+{"build": "generic, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 1, "prefill": 491.3, "decode": 69.8, "decode_interrupted": 67.3}
+{"build": "generic, unsliced", "policy": "default", "threads": "6/12", "round": 2, "prefill": 399.5, "decode": 81.5, "decode_interrupted": 72.8}
+{"build": "generic, unsliced", "policy": "default", "threads": "6/8", "round": 2, "prefill": 381.2, "decode": 88.2, "decode_interrupted": 74.0}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 2, "prefill": 461.2, "decode": 82.9, "decode_interrupted": 82.7}
+{"build": "generic, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 2, "prefill": 439.5, "decode": 80.9, "decode_interrupted": 77.7}
+{"build": "generic, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 2, "prefill": 421.1, "decode": 72.3, "decode_interrupted": 68.4}
+{"build": "native, unsliced", "policy": "default", "threads": "6/12", "round": 2, "prefill": 491.1, "decode": 91.7, "decode_interrupted": 74.8}
+{"build": "native, unsliced", "policy": "default", "threads": "6/8", "round": 2, "prefill": 519.2, "decode": 90.6, "decode_interrupted": 78.5}
+{"build": "native, unsliced", "policy": "default", "threads": "4/12 pinP", "round": 2, "prefill": 558.1, "decode": 83.4, "decode_interrupted": 86.9}
+{"build": "native, unsliced", "policy": "default", "threads": "4/8 pinP", "round": 2, "prefill": 481.8, "decode": 92.7, "decode_interrupted": 83.8}
+{"build": "native, unsliced", "policy": "default", "threads": "2/12 pinP", "round": 2, "prefill": 550.1, "decode": 78.4, "decode_interrupted": 70.5}
+{"build": "generic, sliced", "policy": "default", "threads": "6/12", "round": 2, "prefill": 416.9, "decode": 100.5, "decode_interrupted": 90.1}
+{"build": "generic, sliced", "policy": "default", "threads": "6/8", "round": 2, "prefill": 393.8, "decode": 113.6, "decode_interrupted": 96.1}
+{"build": "generic, sliced", "policy": "default", "threads": "4/12 pinP", "round": 2, "prefill": 428.0, "decode": 115.0, "decode_interrupted": 111.4}
+{"build": "generic, sliced", "policy": "default", "threads": "4/8 pinP", "round": 2, "prefill": 422.4, "decode": 116.5, "decode_interrupted": 113.2}
+{"build": "generic, sliced", "policy": "default", "threads": "2/12 pinP", "round": 2, "prefill": 496.7, "decode": 102.1, "decode_interrupted": 98.6}
+{"build": "native, sliced", "policy": "active", "threads": "6/12", "round": 2, "prefill": 455.1, "decode": 42.6, "decode_interrupted": 37.8}
+{"build": "native, sliced", "policy": "active", "threads": "6/8", "round": 2, "prefill": 409.6, "decode": 44.3, "decode_interrupted": 41.5}
+{"build": "native, sliced", "policy": "active", "threads": "4/12 pinP", "round": 2, "prefill": 452.0, "decode": 58.1, "decode_interrupted": 61.6}
+{"build": "native, sliced", "policy": "active", "threads": "4/8 pinP", "round": 2, "prefill": 504.2, "decode": 59.9, "decode_interrupted": 63.6}
+{"build": "native, sliced", "policy": "active", "threads": "2/12 pinP", "round": 2, "prefill": 539.8, "decode": 80.1, "decode_interrupted": 76.3}
+{"build": "native, sliced", "policy": "passive", "threads": "6/12", "round": 2, "prefill": 467.7, "decode": 105.7, "decode_interrupted": 101.7}
+{"build": "native, sliced", "policy": "passive", "threads": "6/8", "round": 2, "prefill": 480.6, "decode": 118.7, "decode_interrupted": 96.1}
+{"build": "native, sliced", "policy": "passive", "threads": "4/12 pinP", "round": 2, "prefill": 546.0, "decode": 126.0, "decode_interrupted": 116.8}
+{"build": "native, sliced", "policy": "passive", "threads": "4/8 pinP", "round": 2, "prefill": 499.4, "decode": 130.1, "decode_interrupted": 118.6}
+{"build": "native, sliced", "policy": "passive", "threads": "2/12 pinP", "round": 2, "prefill": 520.9, "decode": 112.0, "decode_interrupted": 103.9}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/12", "round": 2, "prefill": 503.5, "decode": 97.5, "decode_interrupted": 90.2}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "6/8", "round": 2, "prefill": 432.9, "decode": 101.5, "decode_interrupted": 93.2}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/12 pinP", "round": 2, "prefill": 529.4, "decode": 91.7, "decode_interrupted": 75.0}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "4/8 pinP", "round": 2, "prefill": 510.4, "decode": 83.7, "decode_interrupted": 66.2}
+{"build": "native, sliced, no-omp", "policy": "default", "threads": "2/12 pinP", "round": 2, "prefill": 423.5, "decode": 110.3, "decode_interrupted": 97.3}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/12", "round": 2, "prefill": 502.3, "decode": 116.8, "decode_interrupted": 94.5}
+{"build": "native, sliced, lto", "policy": "default", "threads": "6/8", "round": 2, "prefill": 487.2, "decode": 127.3, "decode_interrupted": 101.0}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/12 pinP", "round": 2, "prefill": 481.2, "decode": 119.9, "decode_interrupted": 117.8}
+{"build": "native, sliced, lto", "policy": "default", "threads": "4/8 pinP", "round": 2, "prefill": 481.1, "decode": 122.4, "decode_interrupted": 124.8}
+{"build": "native, sliced, lto", "policy": "default", "threads": "2/12 pinP", "round": 2, "prefill": 546.6, "decode": 105.6, "decode_interrupted": 111.1}

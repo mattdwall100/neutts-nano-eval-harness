@@ -1,0 +1,21 @@
+[project]
+name = "neutts-bench"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "datasets>=3.0",
+    "faster-whisper>=1.2.1",
+    "gguf>=0.19.0",
+    "librosa>=0.11.0",
+    "llama-cpp-python==0.3.19",
+    "matplotlib>=3.11.2",
+    "neutts>=1.4.1",
+    "onnxruntime>=1.30.0",
+    "psutil>=7.2.2",
+    "soundfile>=0.13.1",
+    "speechbrain>=1.1.1",
+    "torchao<0.14",
+]
+
+[tool.uv.sources]
+llama-cpp-python = { url = "https://github.com/abetlen/llama-cpp-python/releases/download/v0.3.19/llama_cpp_python-0.3.19-cp312-cp312-win_amd64.whl", marker = "sys_platform == 'win32'" }
