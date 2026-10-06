@@ -1,22 +1,22 @@
 # NeuTTS-Nano on-device benchmark and optimisation
 
-A benchmarking harness for [NeuTTS-Nano](https://github.com/neuphonic/neutts) on a laptop CPU, and the optimisation it drove: **the shipped configuration runs at 10-17x slower than real time on this machine; the final one runs at 0.87x in batch and 0.95x streaming, with the same model weights and byte-identical audio for the last step.**
+A benchmarking harness for [NeuTTS-Nano](https://github.com/neuphonic/neutts) on a laptop CPU, and the optimisation it drove: **the shipped configuration runs at 10-17x slower than real time on this machine; the final one runs at 0.87x in batch and 0.95x streaming. No retraining anywhere: only Neuphonic's published artefacts (the Q4 backbone, the int8 codec), and for the last optimisation step the audio is byte-identical.**
 
 ![headline](results/headline.png)
 
 | # | Step added (each row includes all above it) | RTF | Peak RAM |
 |---|---|---|---|
 | 1 | As shipped: torch bf16 backbone, torch codec, 13 s reference, watermark | 10.6 | 3.3 GB |
-| 2 | Q4 GGUF backbone, ONNX int8 codec | 2.27 | 1.3 GB |
+| 2 | Q4 GGUF backbone, ONNX int8 codec | 2.27 | 1.0 GB |
 | 3 | 5 s reference clip | 1.12 | |
 | 4 | Watermark off | 1.11 | |
 | 5 | llama.cpp compiled for this CPU | 1.08 | |
 | 6 | Output projection sliced to the speech rows (49-line llama.cpp patch) | **0.87** | |
 | 7 | Decode threads pinned to P-cores | 0.87 | |
-| 8 | Streaming with the shipped streaming settings | 2.56, stalls | |
-| 9 | Streaming, codec thread spinning off, 50-frame chunks | **0.95, no stalls, first audio 1.4 s** | 1.4 GB |
+| 8 | Streaming with the shipped streaming settings (on row 7's pinned config; unpinned it measures 1.69) | 2.56, stalls | |
+| 9 | Streaming, codec thread spinning off and 50-frame chunks (two changes) | **0.95, no stalls, first audio 1.4 s** | |
 
-RTF = seconds of compute per second of audio; below 1.0 is real time. One interleaved session, voice "jo", 20 utterances per row. Quality (word error rate, speaker similarity) is flat from row 2 on. On five unseen voices and unseen sentences the final configuration measures 0.73 batch and 0.96 streaming, stall-free (see [DESIGN.md](DESIGN.md), "Held-out test set").
+RTF = seconds of compute per second of audio; below 1.0 is real time. One interleaved session, voice "jo", 20 utterances per row (row 1: 2). Rows 2-7 are the identical weights, a 2.6x gain. Word error rate stays at 2-6 % throughout; speaker similarity is 0.47-0.50 at 13 s and 5 s references in this run, though the 5 s clip measured slightly lower (0.42 vs 0.49) in the dedicated reference sweep. Peak RAM is 1.0 GB for every Q4 + ONNX row (a 1.3 GB figure in `h1_table.md` is a load-time artefact of the `gguf` package, since removed). On five voices never used in tuning, the final configuration measures 0.73 batch and 0.96 streaming with no stalls, with the caveats in DESIGN.md's test-set section.
 
 Everything about *why* is in **[DESIGN.md](DESIGN.md)**: metric definitions, measurement controls, every sweep with its figure, the things that did not work, and the limits.
 
@@ -40,11 +40,11 @@ uv sync
 
 That installs the reference `neutts` package (which bundles espeak-ng), the prebuilt `llama-cpp-python` CPU wheel, ONNX Runtime, faster-whisper and SpeechBrain. First run downloads the models from Hugging Face; the `neuphonic/*` repos are gated, so accept their terms on huggingface.co and log in (`huggingface-cli login`) first. Repos used: `neutts-nano`, `neutts-nano-q4-gguf`, `neutts-nano-q8-gguf`, `neucodec`, `distill-neucodec`, `neucodec-onnx-decoder`, `neucodec-onnx-decoder-int8` (about 7 GB).
 
-Tested on Windows. The `llama-cpp-python` wheel URL in `pyproject.toml` is Windows-only; on Linux or macOS `uv sync` builds it from source (needs a C++ compiler). The patched library (`llama_patch/lib-slice`) is Windows x86-64; rows 5-9 of the headline need it, everything else runs without it.
+Tested on Windows. The `llama-cpp-python` wheel URL in `pyproject.toml` is Windows-only; on Linux or macOS `uv sync` builds it from source (needs a C++ compiler). The patched library (`llama_patch/lib-slice`) is Windows x86-64. The `quick`, `h1` (rows 5-9), `test`, `f1`, `s3`, `s4` and `g1` sweeps need it and exit with a message if it is missing; `b1`, `b2`, `r1`, `s1`, `s2` and any `bench.py` run without `LLAMA_CPP_LIB_PATH` use the prebuilt wheel.
 
 ## Run the benchmark
 
-One command, about 5 minutes, idle laptop:
+One command, about 8 minutes including scoring, idle laptop:
 
 ```bash
 PYTHONUTF8=1 uv run harness/sweep.py quick 2>&1 | tee results/quick_sweep.log
@@ -96,14 +96,14 @@ uv run harness/score.py results/mine
 |---|---|
 | Backbone | `neuphonic/neutts-nano-q4-gguf` on llama.cpp with `llama_patch/llama_output_rows.patch`, `LLAMA_OUTPUT_ROWS=128261:65537` |
 | Codec | `neuphonic/neucodec-onnx-decoder-int8`, `session.intra_op.allow_spinning=0` |
-| Reference | a short clip that **ends on a sentence boundary** (about 5 s); shorter is faster, mid-sentence cuts hurt quality |
+| Reference | a short clip, about 5 s, ending on a natural pause: the headline and quick runs use `jo5` (ends on a comma); on two test voices a mid-sentence 5 s cut was much worse than the whole clip, see DESIGN.md |
 | Watermark | off (a product decision; < 0.03 RTF in batch, large per chunk in streaming) |
 | Streaming | 50-frame chunks, lookback 50, lookforward 5; low-latency alternative 25 / 10 (first audio 0.9 s) |
-| Threads | 4 decode threads pinned to the P-cores, 12 prefill threads (within noise; optional) |
+| Threads | 4 decode threads pinned to the P-cores, 12 prefill threads (0-5 % end to end, within noise; optional, and it interacts badly with the codec's spinning threads unless those are off) |
 
 ### The patched llama.cpp
 
-`llama_patch/llama_output_rows.patch` (49 lines against llama.cpp `c0159f9c`, the revision `llama-cpp-python` 0.3.19 vendors) restricts the final projection to a row range of the vocabulary. NeuTTS-Nano's vocabulary is 194k rows but it only ever emits the 65,536 speech codes plus the stop token; over 17,498 measured decode steps the other rows never came within rank 335 of the sampling cut-off. The slice is a third less work per decode step and the tokens are identical for a given seed, so the audio is byte-identical. The built library is in `llama_patch/lib-slice`; use it with `LLAMA_CPP_LIB_PATH=<absolute path>` and switch the slice on with `LLAMA_OUTPUT_ROWS=128261:65537`. To rebuild: clone llama.cpp at that commit, `git apply llama_output_rows.patch`, build the `llama` target as shared libraries (CMake, any C++17 compiler; with LLVM-MinGW add `-DCMAKE_CXX_FLAGS="-include algorithm -include new"`), and put the DLLs next to the runtime DLLs.
+`llama_patch/llama_output_rows.patch` (49 lines against llama.cpp `c0159f9c`, the revision `llama-cpp-python` 0.3.19 vendors) restricts the final projection to a row range of the vocabulary. NeuTTS-Nano's vocabulary is 194k rows but it only ever emits the 65,536 speech codes plus the stop token; over 17,498 measured decode steps no other row ever entered the top-50 sampling set; the best any reached was rank 335 overall. The slice is a third less work per decode step and the tokens are identical for a given seed, so the audio is byte-identical. The built library is in `llama_patch/lib-slice`; use it with `LLAMA_CPP_LIB_PATH=<absolute path>` and switch the slice on with `LLAMA_OUTPUT_ROWS=128261:65537`. To rebuild: clone llama.cpp at that commit, `git apply llama_output_rows.patch`, build the `llama` target as shared libraries (CMake, any C++17 compiler; with LLVM-MinGW add `-DCMAKE_CXX_FLAGS="-include algorithm -include new"`), and put the DLLs next to the runtime DLLs.
 
 ## Repository
 
@@ -117,7 +117,7 @@ uv run harness/score.py results/mine
 | `slice_stats.py`, `slice_test.py` | the evidence for, and the test of, the output-row slice |
 | `stream.py` | token-level streaming loop (experiment; kept, not used in the final configuration) |
 | `make_refs.py` | cut a reference voice at a word boundary with a matching transcript |
-| `corpus.txt` | 70 Harvard sentences; lines 1-10 were used for tuning, the rest are held out |
+| `corpus.txt` | 70 texts from the Harvard sentences (60 single sentences, 10 three-sentence passages); lines 1-10 were used for tuning |
 | `samples/` | Neuphonic's reference voices, cut variants, cached codes |
 | `results/` | tables, summaries, rows, figures for every sweep (audio not committed) |
 | `DESIGN.md` | decisions, findings, figures, limits |
