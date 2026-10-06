@@ -103,7 +103,35 @@ uv run harness/score.py results/mine
 
 ### The patched llama.cpp
 
-`llama_patch/llama_output_rows.patch` (49 lines against llama.cpp `c0159f9c`, the revision `llama-cpp-python` 0.3.19 vendors) restricts the final projection to a row range of the vocabulary. NeuTTS-Nano's vocabulary is 194k rows but it only ever emits the 65,536 speech codes plus the stop token; over 17,498 measured decode steps no other row ever entered the top-50 sampling set; the best any reached was rank 335 overall. The slice is a third less work per decode step and the tokens are identical for a given seed, so the audio is byte-identical. The built library is in `llama_patch/lib-slice`; use it with `LLAMA_CPP_LIB_PATH=<absolute path>` and switch the slice on with `LLAMA_OUTPUT_ROWS=128261:65537`. To rebuild: clone llama.cpp at that commit, `git apply llama_output_rows.patch`, build the `llama` target as shared libraries (CMake, any C++17 compiler; with LLVM-MinGW add `-DCMAKE_CXX_FLAGS="-include algorithm -include new"`), and put the DLLs next to the runtime DLLs.
+`llama_patch/llama_output_rows.patch` restricts llama.cpp's final projection to a row range of the vocabulary. NeuTTS-Nano's vocabulary is 194k rows but it only ever emits the 65,536 speech codes plus the stop token; over 17,498 measured decode steps no other row ever entered the top-50 sampling set (the best any reached was rank 335 overall). The slice is a third less work per decode step, the tokens are identical for a given seed, so the audio is byte-identical. It is off by default; the row range comes from an environment variable.
+
+**Using the shipped build (Windows x86-64 only).** `llama_patch/lib-slice/` holds the built DLLs plus the MinGW runtime. The Python package picks them up through two environment variables, which `sweep.py` sets for you per configuration:
+
+```bash
+LLAMA_CPP_LIB_PATH=C:/absolute/path/to/llama_patch/lib-slice   # must be absolute
+LLAMA_OUTPUT_ROWS=128261:65537                                 # <|SPEECH_GENERATION_END|> + the 65,536 speech codes
+```
+
+**Rebuilding it, or building for Linux / macOS.** The patch is 49 lines in two files (`src/models/llama.cpp`, `src/llama-context.cpp`) and applies to llama.cpp commit `c0159f9c1f874da15e94f371d136f5920b4b5335`. That commit matters: it is the one `llama-cpp-python` 0.3.19 vendors, so the Python bindings match the library's ABI. A different llama-cpp-python version needs its own vendored commit (`git -C vendor/llama.cpp rev-parse HEAD` in that repo) and the patch may need re-basing.
+
+| Requirement | What I used | Notes |
+|---|---|---|
+| C++17 compiler | LLVM-MinGW 20260922 (clang 21), portable zip | no installer or admin rights needed; MSVC or GCC also work |
+| CMake >= 3.14 | CMake 4.4.4, portable zip | |
+| Build tool | Ninja 1.13 | optional; any CMake generator |
+| OpenMP | bundled with LLVM-MinGW (`libomp`) | measured faster than llama.cpp's own thread pool on this CPU; keep `GGML_OPENMP=ON` |
+
+```bash
+git clone https://github.com/ggml-org/llama.cpp && cd llama.cpp
+git checkout c0159f9c1f874da15e94f371d136f5920b4b5335
+git apply ../llama_patch/llama_output_rows.patch
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release       -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++       -DBUILD_SHARED_LIBS=ON -DGGML_NATIVE=ON -DGGML_OPENMP=ON       -DLLAMA_BUILD_TESTS=OFF -DLLAMA_BUILD_EXAMPLES=OFF -DLLAMA_BUILD_TOOLS=OFF -DLLAMA_BUILD_SERVER=OFF -DLLAMA_CURL=OFF       "-DCMAKE_CXX_FLAGS=-include algorithm -include new"      # LLVM-MinGW/libc++ only: two headers this revision forgets to include
+cmake --build build --target llama -j
+```
+
+Build only the `llama` target: the bundled HTTP helper does not compile under MinGW and nothing here uses it. Then collect, into one folder: `build/bin/` `ggml.dll`, `ggml-base.dll`, `ggml-cpu.dll`, `libllama.dll` (Linux: the matching `.so` files; macOS: `.dylib`), and with LLVM-MinGW the runtime DLLs from `<llvm-mingw>/x86_64-w64-mingw32/bin/` (`libc++.dll`, `libunwind.dll`, `libomp.dll`, `libwinpthread-1.dll`). Point `LLAMA_CPP_LIB_PATH` at that folder.
+
+`GGML_NATIVE=ON` compiles for the CPU doing the build (worth about 7 % here); use `OFF` for a portable library. Two things to know when testing: llama.cpp reuses its compute graph while the batch shape repeats, so toggling `LLAMA_OUTPUT_ROWS` inside one process only takes effect at the next prompt; and `uv run experiments/slice_test.py` checks score equality, token identity and speed against the same binary with the slice off.
 
 ## Repository
 
