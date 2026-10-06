@@ -88,18 +88,6 @@ SWEEPS = {
         "f1_ref5_full": dict(ref_audio="samples/jo5.wav", ref_text="samples/jo5.txt", env={"LLAMA_CPP_LIB_PATH": LIB_SLICE}),
         "f1_ref5_sliced": dict(ref_audio="samples/jo5.wav", ref_text="samples/jo5.txt", env={"LLAMA_CPP_LIB_PATH": LIB_SLICE, "LLAMA_OUTPUT_ROWS": SPEECH_ROWS}),
     },
-    # V1: voices. Final pipeline (Q4 + ONNX int8, no watermark, patched llama.cpp) on six speakers at native clip
-    # length, 5 s cuts of three of them, and unsliced twins for two (byte-identity + speed-up beyond one voice).
-    # Speaker similarity is scored against each voice's own full clip.
-    "v1": {
-        "_defaults": dict(backbone=Q4, codec=ONNX8, limit=6, repeats=2, no_watermark=True),
-        **{f"v1_{v}_sliced": dict(ref_audio=f"samples/{v}.wav", ref_text=f"samples/{v}.txt", sim_ref=f"samples/{v}.wav", env={"LLAMA_CPP_LIB_PATH": LIB_SLICE, "LLAMA_OUTPUT_ROWS": SPEECH_ROWS})
-           for v in ("jo", "emily", "dave", "paul", "steven", "sophie")},
-        **{f"v1_{v}_full": dict(ref_audio=f"samples/{v}.wav", ref_text=f"samples/{v}.txt", sim_ref=f"samples/{v}.wav", env={"LLAMA_CPP_LIB_PATH": LIB_SLICE})
-           for v in ("emily", "dave")},
-        **{f"v1_{v}5_sliced": dict(ref_audio=f"samples/{v}5.wav", ref_text=f"samples/{v}5.txt", sim_ref=f"samples/{v}.wav", env={"LLAMA_CPP_LIB_PATH": LIB_SLICE, "LLAMA_OUTPUT_ROWS": SPEECH_ROWS})
-           for v in ("jo", "emily", "dave")},
-    },
     # T1: thread count / P-core pinning on the final configuration (5 s reference, sliced, no watermark).
     "t1": {
         "_defaults": dict(backbone=Q4, codec=ONNX8, limit=6, repeats=2, no_watermark=True, ref_audio="samples/jo5.wav", ref_text="samples/jo5.txt", sim_ref="samples/jo.wav",
