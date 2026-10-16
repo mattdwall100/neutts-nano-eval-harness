@@ -1,5 +1,8 @@
 [project]
-name = "neutts-bench"
+name = "neutts-nano-eval-harness"
+description = "Benchmark harness and CPU optimisation for NeuTTS-Nano on-device TTS"
+license = "MIT"
+authors = [{ name = "Matt Wall" }]
 version = "0.1.0"
 requires-python = ">=3.12,<3.13"
 dependencies = [

@@ -57,7 +57,7 @@ Threads turned out small. Prefill likes all twelve threads; decode is best on fo
 
 As shipped, streaming was 1.6x slower than batch at the default chunk size and stalled for seconds. Three causes, and one wrong hypothesis:
 
-- **The watermark per chunk**, a fixed cost of roughly 0.1 s per call at the shipped chunk size, more on small chunks. Off, as a product decision for Neuphonic to revisit.
+- **The watermark per chunk**, a fixed cost of roughly 0.1 s per call at the shipped chunk size, more on small chunks. Off here; turn it on if you need provenance.
 - **Context re-decode.** The vocoder is bidirectional with global attention, so each chunk re-decodes lookback frames and the result never converges to the batch output (4.2 dB at zero lookback, 2.5 dB at 100, no plateau). Lookback is a quality dial; larger chunks amortise it.
 - **Generation itself ran 2x slower in streaming.** I assumed the library's per-token Python path and wrote a token-level loop, verified token-identical to the reference. It gained nothing (it did find a one-frame bug in the shipped tail chunk) and is kept in `experiments/` as the record of a wrong guess.
 - **The real cause**: ONNX Runtime's codec workers keep spinning after each call and occupy the cores the backbone needs; a one-off probe, not in `results/`, showed decode at 35 steps/s after a codec call against 95 steady. One session option, sleep when idle, restored it. Batch never showed it because it calls the codec once per sentence.
@@ -84,10 +84,10 @@ Everything above was tuned on one voice and ten sentences, so the last run was a
 
 Quality did not generalise uniformly. Two voices had 3-7x the word error rate, and they were the two I had cut to five seconds mid-sentence; their whole clips roughly halved the errors but are also longer and run at RTF 0.95 and 1.23. So "under real time on every voice" holds for batch with the clips as tested, not for streaming, where two voices sit at or just above 1.0, and the recommendation is a short clip ending on a natural pause, checked per voice with this harness. The run also produced one failed utterance in a hundred, the model sampling its stop token first; it reproduces on the unmodified library, the shipped code crashes on it in both modes, and the harness now records it.
 
-## What I'd tell the team
+## Recommendations
 
 Two findings cost nothing and apply everywhere: the output-row slice, a few lines in their own llama.cpp build or export, and the codec's spinning threads, a one-line session option that is the main reason their streaming mode is slower than their batch mode (with it fixed and the watermark off, streaming is still about 30 % slower than batch from context re-decode). Beyond those: the bf16 default is a trap on CPUs without bf16 instructions, and the reference clip length is the biggest lever a user controls.
 
 ## Limits and rejected ideas
 
-Samples are small, 6-20 texts with one or two seeds, to fit a laptop; the harness scales and only final configurations got the larger runs. Threads and the compiled library are specific to this chip; the slice is verified on Q4, English, top-50 sampling. Rejected: optimising for the playback device (output is PCM); a lower token rate and a trained decoder (retraining, GPU); pinning pipeline stages to separate cores in batch mode (stages are sequential); the load gate; the Python-side projection; llama.cpp batch sizes; and reusing the cached prompt prefix between utterances, which is real but secondary and unmeasured. `docs/PLAN.md` is the original plan, kept as written.
+Samples are small, 6-20 texts with one or two seeds, to fit a laptop; the harness scales and only final configurations got the larger runs. Threads and the compiled library are specific to this chip; the slice is verified on Q4, English, top-50 sampling. Rejected: optimising for the playback device (output is PCM); a lower token rate and a trained decoder (retraining, GPU); pinning pipeline stages to separate cores in batch mode (stages are sequential); the load gate; the Python-side projection; llama.cpp batch sizes; and reusing the cached prompt prefix between utterances, which is real but secondary and unmeasured.

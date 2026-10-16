@@ -62,7 +62,7 @@ uv run harness/score.py results/mine
 | Backbone | `neutts-nano-q4-gguf` on the patched llama.cpp, `LLAMA_OUTPUT_ROWS=128261:65537` |
 | Codec | `neucodec-onnx-decoder-int8` with thread spinning off (`--codec-no-spin`) |
 | Reference | a short clip, about 5 s, ending on a natural pause; check per voice |
-| Watermark | off (a product decision for Neuphonic; 0.03 RTF in batch, large per chunk in streaming) |
+| Watermark | off by default; turn it on if you need provenance (0.03 RTF in batch, large per chunk in streaming) |
 | Streaming | 50-frame chunks, lookback 50; low-latency alternative 25 / 10 |
 | Threads | 4 decode threads pinned to P-cores, 12 prefill (optional, within noise) |
 
@@ -81,7 +81,7 @@ cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -
 cmake --build build --target llama -j
 ```
 
-Put `ggml`, `ggml-base`, `ggml-cpu` and `libllama` from `build/bin` in one folder (plus, with MinGW, its `libc++`, `libunwind`, `libomp` and `libwinpthread-1` runtime DLLs) and point `LLAMA_CPP_LIB_PATH` at it. `uv run experiments/slice_test.py` checks the build against itself with the slice off.
+Put `ggml`, `ggml-base`, `ggml-cpu` and `libllama` from `build/bin` in one folder (plus, with MinGW, its `libc++`, `libunwind` and `libomp` runtime DLLs) and point `LLAMA_CPP_LIB_PATH` at it. `uv run experiments/slice_test.py` checks the build against itself with the slice off.
 
 ## Repository
 
@@ -90,6 +90,10 @@ Put `ggml`, `ggml-base`, `ggml-cpu` and `libllama` from `build/bin` in one folde
 | `harness/` | `bench.py` (the harness), `score.py`, `sweep.py`, `plot.py`, `plot_headline.py` |
 | `experiments/` | microbenchmarks and one-off studies: threads, build grid, the slice evidence and test, a token-level streaming loop, reference-clip cutting |
 | `llama_patch/` | the patch and the built Windows library |
-| `samples/`, `corpus.txt` | Neuphonic's reference voices with cut variants; 70 Harvard-sentence texts (lines 1-10 used for tuning) |
+| `samples/`, `corpus.txt` | NeuTTS reference voices (NeuTTS Open License, see `samples/LICENSE`) with cut variants; 70 Harvard-sentence texts (lines 1-10 used for tuning) |
 | `results/` | tables, summaries, per-utterance rows and figures for every sweep (audio not committed) |
-| `DESIGN.md`, `docs/` | the decisions; the brief and the original plan |
+| `DESIGN.md` | the decisions, findings and limits |
+
+## License
+
+MIT (`LICENSE`), except `samples/` (NeuTTS Open License, see `samples/NOTICE`) and the bundled llama.cpp build in `llama_patch/` (llama.cpp MIT, LLVM runtime Apache-2.0 with LLVM exceptions; licences alongside).

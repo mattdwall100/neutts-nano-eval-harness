@@ -406,7 +406,7 @@ def main():
         "high_priority": high_prio,
         "load_s": round(load_s, 3),
         "rss_after_load_mb": round(rss_after_load, 1),
-        "llama_lib": os.environ.get("LLAMA_CPP_LIB_PATH") or "wheel",
+        "llama_lib": Path(os.path.relpath(os.environ["LLAMA_CPP_LIB_PATH"])).as_posix() if os.environ.get("LLAMA_CPP_LIB_PATH") else "wheel",
         "output_rows": os.environ.get("LLAMA_OUTPUT_ROWS") or None,
         "cpu": cpu_name(),
         "cores": os.cpu_count(),

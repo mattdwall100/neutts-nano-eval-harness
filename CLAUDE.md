@@ -4,11 +4,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Layout
 
-`harness/` (bench, score, sweep, plot), `experiments/` (tune, grid, slice_stats, slice_test, stream, make_refs), `llama_patch/` (patch + built DLLs), `docs/` (brief, plan). Run every script from the repo root: paths like `results/`, `samples/`, `corpus.txt` are relative to it.
+`harness/` (bench, score, sweep, plot), `experiments/` (tune, grid, slice_stats, slice_test, stream, make_refs), `llama_patch/` (patch + built DLLs). Run every script from the repo root: paths like `results/`, `samples/`, `corpus.txt` are relative to it.
 
 ## What this is
 
-Take-home for Neuphonic (see `docs/BRIEF_NEUPHONIC.md`): a benchmarking harness for NeuTTS-Nano on-device TTS, then optimise it as far as possible on this laptop. `docs/PLAN.md` holds the agreed scope, metric definitions and tiered optimisation plan; read it before proposing new work. `DESIGN.md` (to be written) records what was actually done and why.
+A benchmarking harness for NeuTTS-Nano on-device TTS, and the CPU optimisation it drove. `DESIGN.md` records what was done and why; read it before proposing new work.
 
 Hardware is fixed: Intel i7-1265U (2 P + 8 E cores), 32 GB, no CUDA, Windows 11. Everything runs on CPU.
 
@@ -70,7 +70,7 @@ Nesting differs between paths (prompt is inside generate on GGUF), so `exclusive
 
 Seeding: `tts._seed = seed_base + repeat` before every `infer`, so every configuration uses the identical seed set and comparisons are paired. The `NeuTTS` constructor's `seed` arg is not used because it would fix one seed for all calls.
 
-Reference voice codes are cached as `samples/<voice>.pt` next to the wav. ONNX decoders cannot encode, and the torch encoder takes ~75 s, so always use the cache. `samples/jo.pt` and `samples/dave.pt` came from Neuphonic's repo.
+Reference voice codes are cached as `samples/<voice>.pt` next to the wav. ONNX decoders cannot encode, and the torch encoder takes ~75 s, so always use the cache. Full-length voices come from the neuphonic/neutts repo; `jo3`-`jo10`, `dave5`, `emily5` are our cuts (listed in `samples/NOTICE`).
 
 Peak RSS uses `peak_wset` on Windows, which is a process-lifetime high-water mark, so it reflects load + inference, not inference alone.
 
@@ -94,4 +94,4 @@ Only GGUF backbones support `infer_stream`. `bench.py --stream --chunk-frames 25
 
 ## Results
 
-`results/` is gitignored for now. Each run dir has `meta.json` (config, hardware, power mode, preflight), `rows.jsonl` (one row per utterance incl. other-CPU% and the `suspect` flag), `summary.json` (medians, RTF quartiles, merged with scores), `scores.jsonl`, and WAVs named `t<text>_r<repeat>.wav`. The first B1 attempt was discarded as contaminated (see DESIGN.md).
+Each run dir has `meta.json` (config, hardware, power mode, preflight), `rows.jsonl` (one row per utterance incl. other-CPU% and the `suspect` flag), `summary.json` (medians, RTF quartiles, merged with scores), `scores.jsonl`, and WAVs named `t<text>_r<repeat>.wav`. The first B1 attempt was discarded as contaminated (see DESIGN.md).

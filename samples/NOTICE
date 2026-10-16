@@ -1,0 +1,6 @@
+The voices in this folder (wav, txt, pt) come from https://github.com/neuphonic/neutts (samples/)
+and are distributed under the NeuTTS Open License v1.0 (LICENSE in this folder).
+
+Modified files: jo3, jo5, jo6, jo8, jo10, dave5 and emily5 (.wav, .txt, .pt) are cuts of jo, dave and
+emily at word boundaries, with transcripts trimmed to match and codes re-encoded
+(experiments/make_refs.py).

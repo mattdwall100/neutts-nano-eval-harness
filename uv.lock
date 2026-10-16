@@ -1084,7 +1084,7 @@ wheels = [
 ]
 
 [[package]]
-name = "neutts-bench"
+name = "neutts-nano-eval-harness"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
